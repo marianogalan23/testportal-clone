@@ -327,6 +327,23 @@ HOME_HTML = """
         .quiz-item-name { font-weight: 500; font-size: 14px; color: var(--text); }
         .quiz-item-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
 
+        /* ── Quiz link row ── */
+        .quiz-link-row { display: flex; align-items: center; gap: 6px; padding: 6px 16px 8px; }
+        .quiz-link-url {
+            flex: 1; font-size: 11px; font-family: 'SF Mono', monospace; color: var(--muted);
+            background: var(--warm-50); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 4px 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            cursor: text; user-select: all;
+        }
+        .btn-copy {
+            padding: 4px 10px; font-size: 11px; font-weight: 700; background: none;
+            color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius);
+            cursor: pointer; font-family: inherit; white-space: nowrap;
+            transition: color .15s, border-color .15s, background .15s;
+        }
+        .btn-copy:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+        .btn-copy.copied { color: var(--success); border-color: var(--success-border); background: var(--success-soft); }
+
         /* ── Toggle panels ── */
         .assign-toggle, .class-toggle, .cls-toggle { display: none; }
         .assign-panel, .class-panel, .cls-panel { display: none; padding: 10px 16px; border-top: 1px solid var(--warm-200); background: var(--warm-50); align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -507,6 +524,10 @@ HOME_HTML = """
                                         </form>
                                     </div>
                                 </div>
+                                <div class="quiz-link-row">
+                                    <span class="quiz-link-url" id="link-{{ quiz[0] }}">{{ base_url }}/quiz/{{ quiz[0] }}</span>
+                                    <button type="button" class="btn-copy" onclick="copyLink(this, 'link-{{ quiz[0] }}')">Copy link</button>
+                                </div>
                                 <div class="assign-panel">
                                     <form method="POST" action="/quiz/{{ quiz[0] }}/assign" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                                         <label>Assign to:</label>
@@ -537,6 +558,16 @@ HOME_HTML = """
         </div>
     {% endif %}
 </div>
+<script>
+function copyLink(btn, id) {
+    var text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function() { btn.textContent = 'Copy link'; btn.classList.remove('copied'); }, 1500);
+    });
+}
+</script>
 </body>
 </html>
 """
@@ -870,6 +901,7 @@ LOGIN_HTML = """
             {% endif %}
 
             <form method="POST">
+                {% if next_url %}<input type="hidden" name="next" value="{{ next_url }}">{% endif %}
                 <div class="field">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username"
@@ -897,8 +929,10 @@ LOGIN_HTML = """
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    next_url = request.args.get("next") or request.form.get("next") or ""
+
     if session.get("username"):
-        return redirect(url_for("home"))
+        return redirect(next_url or url_for("home"))
 
     error = None
     username = ""
@@ -916,11 +950,11 @@ def login():
         if user:
             session["username"] = username
             session["role"] = user[1] or "student"
-            return redirect(url_for("home"))
+            return redirect(next_url or url_for("home"))
         else:
             error = "Invalid username or password."
 
-    return render_template_string(LOGIN_HTML, error=error, username=username)
+    return render_template_string(LOGIN_HTML, error=error, username=username, next_url=next_url)
 
 
 @app.route("/logout")
@@ -982,6 +1016,7 @@ def home():
         is_teacher=is_teacher(),
         flash_message=flash_message,
         flash_type=flash_type,
+        base_url=request.host_url.rstrip("/"),
     )
 
 
@@ -1053,7 +1088,7 @@ def import_students():
 @app.route("/quiz/<int:quiz_id>", methods=["GET", "POST"])
 def take_quiz(quiz_id):
     if not session.get("username"):
-        return redirect(url_for("login"))
+        return redirect(url_for("login", next=f"/quiz/{quiz_id}"))
 
     current_user = session["username"]
 
@@ -1066,6 +1101,20 @@ def take_quiz(quiz_id):
     if not quiz_row:
         conn.close()
         return "Quiz not found."
+
+    # Permission check: teachers can access any quiz; students only assigned ones
+    if not is_teacher():
+        cur.execute("""
+            SELECT 1 FROM assignments WHERE quiz_id = %s AND username = %s
+            UNION
+            SELECT 1 FROM class_assignments ca
+            JOIN class_members cm ON cm.class_id = ca.class_id
+            WHERE ca.quiz_id = %s AND cm.username = %s
+            LIMIT 1
+        """, (quiz_id, current_user, quiz_id, current_user))
+        if not cur.fetchone():
+            conn.close()
+            return redirect(url_for("home", flash="You do not have access to this assessment.", flash_type="error"))
 
     cur.execute(
         "SELECT id, question_text, correct_answer FROM questions WHERE quiz_id = %s",
