@@ -247,123 +247,136 @@ HOME_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --primary: #4f46e5; --primary-hover: #4338ca; --primary-soft: #eef2ff;
-            --danger: #dc2626; --danger-soft: #fef2f2; --danger-border: #fecaca;
-            --success: #16a34a; --success-soft: #f0fdf4; --success-border: #bbf7d0;
-            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
-            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
-            --gray-600: #4b5563; --gray-700: #374151; --gray-900: #111827;
-            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
-            --text: #111827; --text-sec: #374151; --muted: #6b7280; --dim: #9ca3af;
-            --radius: 8px; --radius-lg: 10px;
-            --shadow: 0 1px 2px rgba(0,0,0,0.04);
-            --ring: 0 0 0 2px rgba(79,70,229,0.15);
+            --accent: #7c2d3e; --accent-hover: #651d30; --accent-soft: #fdf2f4; --accent-border: #e8c4cb;
+            --success: #166534; --success-soft: #f0fdf4; --success-border: #bbf7d0;
+            --danger: #991b1b; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --warm-50: #fafaf9; --warm-100: #f5f5f4; --warm-200: #e7e5e4;
+            --warm-300: #d6d3d1; --warm-400: #a8a29e; --warm-500: #78716c;
+            --warm-600: #57534e; --warm-700: #44403c; --warm-900: #1c1917;
+            --bg: #f7f7f5; --card: #ffffff; --border: #e7e5e4;
+            --text: #1c1917; --text-sec: #44403c; --muted: #78716c; --dim: #a8a29e;
+            --radius: 6px; --radius-lg: 8px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06);
+            --ring: 0 0 0 2px rgba(124,45,62,0.12);
+            --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --sans: 'Inter', system-ui, sans-serif;
         }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-        /* ── Nav ── */
-        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; position: sticky; top: 0; z-index: 50; }
-        .brand { font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; margin-right: 20px; }
-        .brand b { color: var(--primary); }
+        /* ── Top stripe + Nav ── */
+        .top-stripe { height: 3px; background: var(--accent); }
+        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 54px; gap: 6px; position: sticky; top: 0; z-index: 50; }
+        .brand { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--accent); text-decoration: none; margin-right: 24px; letter-spacing: -0.3px; }
         .nav-link { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: color .15s, background .15s; }
-        .nav-link:hover { color: var(--text); background: var(--gray-50); }
-        .nav-link.active { color: var(--primary); background: var(--primary-soft); }
-        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-        .nav-user { font-size: 12px; color: var(--muted); }
-        .btn-logout { padding: 4px 10px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
-        .btn-logout:hover { color: var(--text); border-color: var(--gray-300); }
+        .nav-link:hover { color: var(--text); background: var(--warm-100); }
+        .nav-link.active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+        .nav-user { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .btn-logout { padding: 5px 12px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+        .btn-logout:hover { color: var(--text); border-color: var(--warm-300); }
 
         /* ── Layout ── */
-        .page { max-width: 800px; margin: 0 auto; padding: 32px 24px 80px; }
-        .page-header { margin-bottom: 32px; }
-        .page-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
-        .page-header p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+        .page { max-width: 860px; margin: 0 auto; padding: 28px 24px 64px; }
+        .page-header { margin-bottom: 24px; }
+        .page-header h1 { font-family: var(--serif); font-size: 26px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); }
+        .page-header p { color: var(--muted); font-size: 14px; margin-top: 3px; }
 
         /* ── Flash ── */
-        .flash { padding: 10px 14px; border-radius: var(--radius); font-size: 13px; font-weight: 500; margin-bottom: 24px; }
+        .flash { padding: 10px 14px; border-radius: var(--radius); font-size: 13px; font-weight: 500; margin-bottom: 20px; }
         .flash.success { background: var(--success-soft); border: 1px solid var(--success-border); color: var(--success); }
         .flash.error { background: var(--danger-soft); border: 1px solid var(--danger-border); color: var(--danger); }
 
         /* ── Section ── */
-        .section { margin-bottom: 32px; }
-        .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); margin-bottom: 10px; }
+        .section { margin-bottom: 28px; }
+        .section-heading {
+            font-family: var(--serif); font-size: 15px; font-weight: 600; color: var(--text);
+            padding-left: 12px; border-left: 3px solid var(--accent); margin-bottom: 12px;
+        }
 
         /* ── Card ── */
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); }
         .card + .card { margin-top: 10px; }
-        .card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+        .card-title { font-size: 13px; font-weight: 600; color: var(--text-sec); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
         .card-help { margin-top: 10px; font-size: 12px; color: var(--dim); }
-        .card-help code { font-size: 11px; background: var(--gray-100); padding: 1px 5px; border-radius: 3px; font-family: 'SF Mono', monospace; }
+        .card-help code { font-size: 11px; background: var(--warm-100); padding: 1px 5px; border-radius: 3px; font-family: 'SF Mono', monospace; }
 
         /* ── Buttons ── */
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 8px 16px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; font-family: inherit; transition: background .15s, box-shadow .15s; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 8px 16px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; font-family: inherit; transition: background .15s; }
         .btn:active { transform: scale(0.98); }
-        .btn-primary { background: var(--primary); color: #fff; }
-        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: var(--accent-hover); }
         .btn-danger { background: none; color: var(--danger); border: 1px solid var(--danger-border); padding: 5px 10px; font-size: 12px; }
         .btn-danger:hover { background: var(--danger-soft); }
         .btn-ghost { background: none; color: var(--muted); padding: 5px 10px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; font-family: inherit; transition: color .15s, border-color .15s; }
-        .btn-ghost:hover { color: var(--primary); border-color: var(--primary); }
+        .btn-ghost:hover { color: var(--accent); border-color: var(--accent-border); }
 
         /* ── File input ── */
-        .file-zone { border: 1px dashed var(--gray-300); border-radius: var(--radius); padding: 14px; background: var(--gray-50); text-align: center; }
+        .file-zone { border: 1px dashed var(--warm-300); border-radius: var(--radius); padding: 14px; background: var(--warm-50); text-align: center; }
         .file-zone input[type="file"] { font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; width: 100%; }
-        .file-zone input[type="file"]::-webkit-file-upload-button { background: var(--card); border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; font-size: 12px; font-weight: 500; color: var(--text-sec); cursor: pointer; margin-right: 8px; font-family: inherit; }
+        .file-zone input[type="file"]::-webkit-file-upload-button { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 4px 10px; font-size: 12px; font-weight: 500; color: var(--text-sec); cursor: pointer; margin-right: 8px; font-family: inherit; }
 
         /* ── Quiz list ── */
         .quiz-list { list-style: none; }
-        .quiz-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; background: var(--card); overflow: hidden; transition: border-color .15s; }
-        .quiz-item:hover { border-color: var(--gray-300); }
-        .quiz-item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; gap: 12px; }
+        .quiz-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 4px; background: var(--card); overflow: hidden; transition: border-color .15s; }
+        .quiz-item:hover { border-color: var(--warm-300); }
+        .quiz-item-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; gap: 12px; }
         .quiz-item-name { font-weight: 500; font-size: 14px; color: var(--text); }
         .quiz-item-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
 
         /* ── Toggle panels ── */
         .assign-toggle, .class-toggle, .cls-toggle { display: none; }
-        .assign-panel, .class-panel, .cls-panel { display: none; padding: 10px 16px; border-top: 1px solid var(--gray-100); background: var(--gray-50); align-items: center; gap: 8px; flex-wrap: wrap; }
+        .assign-panel, .class-panel, .cls-panel { display: none; padding: 10px 16px; border-top: 1px solid var(--warm-200); background: var(--warm-50); align-items: center; gap: 8px; flex-wrap: wrap; }
         .assign-toggle:checked ~ .assign-panel, .class-toggle:checked ~ .class-panel, .cls-toggle:checked ~ .cls-panel { display: flex; }
         .assign-panel label, .class-panel label, .cls-panel label { font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; }
         .panel-input { padding: 7px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; background: var(--card); font-family: inherit; transition: border-color .15s; }
-        .panel-input:focus { border-color: var(--primary); box-shadow: var(--ring); }
+        .panel-input:focus { border-color: var(--accent); box-shadow: var(--ring); }
         input[type="text"].panel-input { width: 180px; }
         select.panel-input { cursor: pointer; }
-        .btn-panel { padding: 7px 14px; font-size: 12px; font-weight: 600; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; font-family: inherit; transition: background .15s; }
-        .btn-panel:hover { background: var(--primary-hover); }
+        .btn-panel { padding: 7px 14px; font-size: 12px; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; font-family: inherit; transition: background .15s; }
+        .btn-panel:hover { background: var(--accent-hover); }
 
         /* ── Class list ── */
         .class-list { list-style: none; }
-        .class-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; background: var(--card); overflow: hidden; }
+        .class-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 4px; background: var(--card); overflow: hidden; }
         .class-item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; }
         .class-item-name { font-weight: 500; font-size: 14px; color: var(--text); display: flex; align-items: center; gap: 8px; }
-        .member-badge { font-size: 11px; color: var(--dim); background: var(--gray-100); border-radius: 99px; padding: 1px 8px; font-weight: 500; }
-        .create-class-row { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+        .member-badge { font-size: 11px; color: var(--warm-500); background: var(--warm-100); border-radius: 99px; padding: 1px 8px; font-weight: 500; }
+        .create-class-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
         .create-class-row input[type="text"] { flex: 1; min-width: 160px; padding: 8px 12px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; background: var(--card); font-family: inherit; transition: border-color .15s; }
-        .create-class-row input[type="text"]:focus { border-color: var(--primary); box-shadow: var(--ring); }
+        .create-class-row input[type="text"]:focus { border-color: var(--accent); box-shadow: var(--ring); }
 
-        .empty { text-align: center; color: var(--dim); font-size: 13px; padding: 24px 0; }
+        .empty { text-align: center; color: var(--dim); font-size: 13px; padding: 20px 0; }
 
         .import-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (max-width: 640px) { .import-grid { grid-template-columns: 1fr; } }
 
         /* ── Student quiz cards ── */
         .student-quiz-grid { display: flex; flex-direction: column; gap: 6px; }
-        .student-quiz-card { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); text-decoration: none; transition: border-color .15s, box-shadow .15s; }
-        .student-quiz-card:hover { border-color: var(--gray-300); box-shadow: var(--shadow); }
-        .sq-name { font-weight: 500; font-size: 14px; color: var(--text); }
+        .student-quiz-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 20px; background: var(--card); border: 1px solid var(--border);
+            border-left: 3px solid var(--accent); border-radius: var(--radius-lg);
+            text-decoration: none; box-shadow: var(--shadow);
+            transition: border-color .15s, box-shadow .2s;
+        }
+        .student-quiz-card:hover { border-color: var(--warm-300); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .sq-name { font-weight: 600; font-size: 14px; color: var(--text); }
+        .sq-meta { font-size: 12px; color: var(--dim); margin-top: 2px; }
         .sq-arrow { color: var(--dim); font-size: 18px; transition: color .15s; }
-        .student-quiz-card:hover .sq-arrow { color: var(--primary); }
+        .student-quiz-card:hover .sq-arrow { color: var(--accent); }
 
-        @media (max-width: 600px) { nav { padding: 0 16px; } .page { padding: 24px 16px 60px; } }
+        @media (max-width: 600px) { nav { padding: 0 16px; } .page { padding: 20px 16px 48px; } }
     </style>
 </head>
 <body>
 
+<div class="top-stripe"></div>
 <nav>
-    <a href="/" class="brand">Test<b>Portal</b></a>
+    <a href="/" class="brand">TestPortal</a>
     <a href="/" class="nav-link active">Home</a>
     {% if is_teacher %}<a href="/results" class="nav-link">Results</a>{% endif %}
     <span class="nav-right">
@@ -384,34 +397,37 @@ HOME_HTML = """
 
     {% if not is_teacher %}
         <div class="page-header">
-            <h1>Your Quizzes</h1>
-            <p>Select a quiz to begin.</p>
+            <h1>Assigned Assessments</h1>
+            <p>Select an assessment to begin.</p>
         </div>
 
         {% if quizzes %}
             <div class="student-quiz-grid">
                 {% for quiz in quizzes %}
                     <a href="/quiz/{{ quiz[0] }}" class="student-quiz-card">
-                        <span class="sq-name">{{ quiz[1] }}</span>
+                        <div>
+                            <div class="sq-name">{{ quiz[1] }}</div>
+                            <div class="sq-meta">Assessment</div>
+                        </div>
                         <span class="sq-arrow">&#8250;</span>
                     </a>
                 {% endfor %}
             </div>
         {% else %}
             <div class="card">
-                <p class="empty">No quizzes assigned to you yet.</p>
+                <p class="empty">No assessments assigned to you yet.</p>
             </div>
         {% endif %}
 
     {% else %}
 
         <div class="page-header">
-            <h1>Dashboard</h1>
-            <p>Manage quizzes, students, and classes.</p>
+            <h1>Teacher Dashboard</h1>
+            <p>Manage assessments, students, and classes.</p>
         </div>
 
         <div class="section">
-            <div class="section-label">Import</div>
+            <div class="section-heading">Import Data</div>
             <div class="import-grid">
                 <div class="card">
                     <div class="card-title">Quiz (.docx)</div>
@@ -436,7 +452,7 @@ HOME_HTML = """
         </div>
 
         <div class="section">
-            <div class="section-label">Classes</div>
+            <div class="section-heading">Classes</div>
             <div class="card">
                 <form method="POST" action="/class/create" class="create-class-row">
                     <input type="text" name="name" placeholder="New class name" required>
@@ -450,7 +466,7 @@ HOME_HTML = """
                                 <div class="class-item-row">
                                     <span class="class-item-name">
                                         {{ cls[1] }}
-                                        <span class="member-badge">{{ cls[2] }}</span>
+                                        <span class="member-badge">{{ cls[2] }} members</span>
                                     </span>
                                     <label for="cls-{{ cls[0] }}" class="btn-ghost">+ Add member</label>
                                 </div>
@@ -471,8 +487,8 @@ HOME_HTML = """
         </div>
 
         <div class="section">
-            <div class="section-label">Quizzes</div>
-            <div class="card" style="padding:10px;">
+            <div class="section-heading">Assessments</div>
+            <div class="card" style="padding:8px;">
                 {% if quizzes %}
                     <ul class="quiz-list">
                         {% for quiz in quizzes %}
@@ -515,7 +531,7 @@ HOME_HTML = """
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p class="empty">No quizzes imported yet.</p>
+                    <p class="empty">No assessments imported yet.</p>
                 {% endif %}
             </div>
         </div>
@@ -534,54 +550,61 @@ QUIZ_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ quiz_title }} — TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --primary: #4f46e5; --primary-hover: #4338ca; --primary-soft: #eef2ff;
-            --danger: #dc2626; --danger-soft: #fef2f2; --danger-border: #fecaca;
-            --success: #16a34a; --success-soft: #f0fdf4; --success-border: #bbf7d0;
-            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
-            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
-            --gray-600: #4b5563; --gray-700: #374151; --gray-900: #111827;
-            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
-            --text: #111827; --text-sec: #374151; --muted: #6b7280; --dim: #9ca3af;
-            --radius: 8px; --radius-lg: 10px;
-            --shadow: 0 1px 2px rgba(0,0,0,0.04);
-            --ring: 0 0 0 2px rgba(79,70,229,0.15);
+            --accent: #7c2d3e; --accent-hover: #651d30; --accent-soft: #fdf2f4; --accent-border: #e8c4cb;
+            --success: #166534; --success-soft: #f0fdf4; --success-border: #bbf7d0;
+            --danger: #991b1b; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --warm-50: #fafaf9; --warm-100: #f5f5f4; --warm-200: #e7e5e4;
+            --warm-300: #d6d3d1; --warm-400: #a8a29e; --warm-500: #78716c;
+            --warm-600: #57534e; --warm-700: #44403c; --warm-900: #1c1917;
+            --bg: #f7f7f5; --card: #ffffff; --border: #e7e5e4;
+            --text: #1c1917; --text-sec: #44403c; --muted: #78716c; --dim: #a8a29e;
+            --radius: 6px; --radius-lg: 8px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06);
+            --ring: 0 0 0 2px rgba(124,45,62,0.12);
+            --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --sans: 'Inter', system-ui, sans-serif;
         }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-        /* ── Nav ── */
-        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; position: sticky; top: 0; z-index: 50; }
-        .brand { font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; margin-right: 20px; }
-        .brand b { color: var(--primary); }
+        /* ── Top stripe + Nav ── */
+        .top-stripe { height: 3px; background: var(--accent); }
+        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 54px; gap: 6px; position: sticky; top: 0; z-index: 50; }
+        .brand { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--accent); text-decoration: none; margin-right: 24px; letter-spacing: -0.3px; }
         .nav-link { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: color .15s, background .15s; }
-        .nav-link:hover { color: var(--text); background: var(--gray-50); }
-        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-        .nav-user { font-size: 12px; color: var(--muted); }
-        .btn-logout { padding: 4px 10px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
-        .btn-logout:hover { color: var(--text); border-color: var(--gray-300); }
+        .nav-link:hover { color: var(--text); background: var(--warm-100); }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+        .nav-user { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .btn-logout { padding: 5px 12px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+        .btn-logout:hover { color: var(--text); border-color: var(--warm-300); }
 
         /* ── Layout ── */
-        .page { max-width: 700px; margin: 0 auto; padding: 32px 24px 80px; }
-        .page-header { margin-bottom: 28px; }
-        .page-header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
-        .taking-as {
-            display: inline-block; margin-top: 8px; font-size: 12px; color: var(--muted); font-weight: 500;
+        .page { max-width: 720px; margin: 0 auto; padding: 28px 24px 64px; }
+
+        /* ── Assessment header ── */
+        .assessment-header {
+            background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent);
+            border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px; box-shadow: var(--shadow);
         }
+        .assessment-header h1 { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .assessment-meta { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .assessment-meta span { margin-right: 16px; }
 
         /* ── Question cards ── */
         .question-card {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 12px;
+            border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 10px;
+            box-shadow: var(--shadow);
         }
         .question-num {
-            font-size: 11px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.04em; color: var(--dim); margin-bottom: 6px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; color: var(--accent); margin-bottom: 6px;
         }
         .question-text {
-            font-size: 15px; font-weight: 600; line-height: 1.5;
+            font-family: var(--serif); font-size: 16px; font-weight: 400; line-height: 1.6;
             margin-bottom: 16px; color: var(--text);
         }
 
@@ -589,13 +612,13 @@ QUIZ_HTML = """
         .option-label {
             display: flex; align-items: center; gap: 10px;
             padding: 10px 14px; border: 1px solid var(--border);
-            border-radius: var(--radius); margin-bottom: 6px;
+            border-radius: var(--radius); margin-bottom: 5px;
             cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text-sec);
             transition: border-color .15s, background .15s;
         }
-        .option-label:hover { border-color: var(--gray-300); background: var(--gray-50); }
+        .option-label:hover { border-color: var(--warm-300); background: var(--warm-50); }
         .option-label input[type="radio"] {
-            accent-color: var(--primary); width: 16px; height: 16px; flex-shrink: 0;
+            accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0;
         }
 
         /* States */
@@ -610,13 +633,13 @@ QUIZ_HTML = """
         }
         .option-label.option-incorrect:hover { background: var(--danger-soft); border-color: var(--danger-border); }
         .option-label.option-disabled {
-            cursor: default; color: var(--dim); opacity: 0.65;
+            cursor: default; color: var(--dim); opacity: 0.6;
         }
         .option-label.option-disabled:hover { border-color: var(--border); background: transparent; }
 
         .option-badge {
             margin-left: auto; font-size: 11px; font-weight: 600;
-            padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+            padding: 2px 8px; border-radius: 3px; white-space: nowrap;
         }
         .badge-correct { background: var(--success-soft); color: var(--success); }
         .badge-incorrect { background: var(--danger-soft); color: var(--danger); }
@@ -624,37 +647,40 @@ QUIZ_HTML = """
 
         /* ── Score banner ── */
         .score-banner {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); padding: 24px;
-            margin-bottom: 24px; display: flex; align-items: center; gap: 16px;
+            background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+            border-radius: var(--radius-lg); padding: 20px 24px;
+            margin-bottom: 20px; box-shadow: var(--shadow);
         }
-        .score-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: var(--primary); }
-        .score-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+        .score-row { display: flex; align-items: baseline; gap: 12px; }
+        .score-value { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--accent); }
+        .score-of { font-size: 14px; color: var(--muted); font-weight: 500; }
+        .score-label { font-size: 12px; color: var(--dim); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
 
         /* ── Submit ── */
-        .submit-row { margin-top: 24px; }
+        .submit-row { margin-top: 20px; }
         .btn-submit {
-            padding: 10px 24px; font-size: 14px; font-weight: 600;
-            background: var(--primary); color: #fff; border: none;
+            padding: 11px 28px; font-size: 14px; font-weight: 600;
+            background: var(--accent); color: #fff; border: none;
             border-radius: var(--radius); cursor: pointer; font-family: inherit;
             transition: background .15s;
         }
-        .btn-submit:hover { background: var(--primary-hover); }
+        .btn-submit:hover { background: var(--accent-hover); }
         .btn-submit:active { transform: scale(0.98); }
 
         .back-link {
-            display: inline-block; margin-top: 24px; font-size: 13px; font-weight: 500;
+            display: inline-block; margin-top: 20px; font-size: 13px; font-weight: 500;
             color: var(--muted); text-decoration: none; transition: color .15s;
         }
-        .back-link:hover { color: var(--primary); }
+        .back-link:hover { color: var(--accent); }
 
-        @media (max-width: 600px) { .page { padding: 24px 16px 60px; } }
+        @media (max-width: 600px) { .page { padding: 20px 16px 48px; } }
     </style>
 </head>
 <body>
 
+<div class="top-stripe"></div>
 <nav>
-    <a href="/" class="brand">Test<b>Portal</b></a>
+    <a href="/" class="brand">TestPortal</a>
     <a href="/" class="nav-link">Home</a>
     {% if is_teacher %}<a href="/results" class="nav-link">Results</a>{% endif %}
     <span class="nav-right">
@@ -668,24 +694,28 @@ QUIZ_HTML = """
 </nav>
 
 <div class="page">
-    <div class="page-header">
+    <div class="assessment-header">
         <h1>{{ quiz_title }}</h1>
-        <span class="taking-as">{{ current_user }}</span>
+        <div class="assessment-meta">
+            <span>Candidate: {{ current_user }}</span>
+            <span>{{ total }} questions</span>
+        </div>
     </div>
 
     {% if submitted %}
         <div class="score-banner">
-            <div>
-                <div class="score-value">{{ score }} / {{ total }}</div>
-                <div class="score-label">Your final score</div>
+            <div class="score-row">
+                <span class="score-value">{{ score }}</span>
+                <span class="score-of">/ {{ total }}</span>
             </div>
+            <div class="score-label">Final Score</div>
         </div>
     {% endif %}
 
     <form method="POST">
         {% for q in questions %}
             <div class="question-card">
-                <div class="question-num">Question {{ loop.index }} of {{ total }}</div>
+                <div class="question-num">Question {{ loop.index }}</div>
                 <div class="question-text">{{ q.text }}</div>
 
                 {% set selected = user_answers.get("q" ~ q.id|string) if submitted else None %}
@@ -727,12 +757,12 @@ QUIZ_HTML = """
 
         {% if not submitted %}
             <div class="submit-row">
-                <button type="submit" class="btn-submit">Submit Quiz</button>
+                <button type="submit" class="btn-submit">Submit Assessment</button>
             </div>
         {% endif %}
     </form>
 
-    <a href="/" class="back-link">Back to home</a>
+    <a href="/" class="back-link">Back to dashboard</a>
 </div>
 
 </body>
@@ -748,42 +778,46 @@ LOGIN_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --primary: #4f46e5; --primary-hover: #4338ca;
-            --danger: #dc2626; --danger-soft: #fef2f2; --danger-border: #fecaca;
-            --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
-            --gray-400: #9ca3af; --gray-500: #6b7280; --gray-900: #111827;
-            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
-            --text: #111827; --muted: #6b7280;
-            --radius: 8px;
-            --ring: 0 0 0 2px rgba(79,70,229,0.15);
+            --accent: #7c2d3e; --accent-hover: #651d30; --accent-soft: #fdf2f4;
+            --danger: #991b1b; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --warm-50: #fafaf9; --warm-100: #f5f5f4; --warm-200: #e7e5e4;
+            --warm-300: #d6d3d1; --warm-400: #a8a29e; --warm-500: #78716c;
+            --warm-900: #1c1917;
+            --bg: #f7f7f5; --card: #ffffff; --border: #e7e5e4;
+            --text: #1c1917; --muted: #78716c;
+            --radius: 6px;
+            --ring: 0 0 0 2px rgba(124,45,62,0.12);
+            --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --sans: 'Inter', system-ui, sans-serif;
         }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--bg); color: var(--text);
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            font-family: var(--sans); background: var(--bg); color: var(--text);
+            min-height: 100vh; display: flex; flex-direction: column;
             -webkit-font-smoothing: antialiased;
         }
 
-        .login-wrapper { width: 100%; max-width: 380px; padding: 0 24px; }
+        .top-stripe { height: 3px; background: var(--accent); flex-shrink: 0; }
+        .login-center { flex: 1; display: flex; align-items: center; justify-content: center; }
+        .login-wrapper { width: 100%; max-width: 400px; padding: 0 24px; }
 
         .login-brand { text-align: center; margin-bottom: 28px; }
         .login-brand-name {
-            font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.3px;
+            font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--accent);
+            letter-spacing: -0.3px;
         }
-        .login-brand-name b { color: var(--primary); }
         .login-brand-sub {
-            font-size: 14px; color: var(--muted); margin-top: 4px;
+            font-size: 14px; color: var(--muted); margin-top: 6px;
         }
 
         .login-card {
             background: var(--card); border: 1px solid var(--border);
             border-radius: var(--radius);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
             padding: 28px 24px 24px;
         }
 
@@ -793,22 +827,22 @@ LOGIN_HTML = """
             color: var(--text); margin-bottom: 5px;
         }
         .field input {
-            width: 100%; padding: 9px 12px; font-size: 14px;
+            width: 100%; padding: 10px 12px; font-size: 14px;
             border: 1px solid var(--border); border-radius: var(--radius);
             outline: none; background: var(--card); font-family: inherit;
             transition: border-color .15s, box-shadow .15s;
         }
-        .field input:focus { border-color: var(--primary); box-shadow: var(--ring); }
-        .field input::placeholder { color: var(--gray-400); }
+        .field input:focus { border-color: var(--accent); box-shadow: var(--ring); }
+        .field input::placeholder { color: var(--warm-400); }
 
         .btn-login {
-            width: 100%; padding: 10px; margin-top: 4px;
+            width: 100%; padding: 11px; margin-top: 4px;
             font-size: 14px; font-weight: 600;
-            background: var(--primary); color: #fff;
+            background: var(--accent); color: #fff;
             border: none; border-radius: var(--radius); cursor: pointer; font-family: inherit;
             transition: background .15s;
         }
-        .btn-login:hover { background: var(--primary-hover); }
+        .btn-login:hover { background: var(--accent-hover); }
         .btn-login:active { transform: scale(0.98); }
 
         .error {
@@ -816,36 +850,43 @@ LOGIN_HTML = """
             color: var(--danger); font-size: 13px; font-weight: 500;
             padding: 10px 12px; border-radius: var(--radius); margin-bottom: 18px;
         }
+
+        .login-footer { text-align: center; margin-top: 20px; font-size: 12px; color: var(--warm-400); }
     </style>
 </head>
 <body>
 
-<div class="login-wrapper">
-    <div class="login-brand">
-        <div class="login-brand-name">Test<b>Portal</b></div>
-        <div class="login-brand-sub">Sign in to your account</div>
-    </div>
+<div class="top-stripe"></div>
+<div class="login-center">
+    <div class="login-wrapper">
+        <div class="login-brand">
+            <div class="login-brand-name">TestPortal</div>
+            <div class="login-brand-sub">Assessment Management Platform</div>
+        </div>
 
-    <div class="login-card">
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
+        <div class="login-card">
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
 
-        <form method="POST">
-            <div class="field">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"
-                       value="{{ username or '' }}" autocomplete="username" required autofocus
-                       placeholder="Enter your username">
-            </div>
-            <div class="field">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password"
-                       autocomplete="current-password" required
-                       placeholder="Enter your password">
-            </div>
-            <button type="submit" class="btn-login">Sign in</button>
-        </form>
+            <form method="POST">
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username"
+                           value="{{ username or '' }}" autocomplete="username" required autofocus
+                           placeholder="Enter your username">
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"
+                           autocomplete="current-password" required
+                           placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn-login">Sign in</button>
+            </form>
+        </div>
+
+        <div class="login-footer">Secure access for teachers and students</div>
     </div>
 </div>
 
@@ -1272,121 +1313,127 @@ RESULTS_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results — TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --primary: #4f46e5; --primary-hover: #4338ca; --primary-soft: #eef2ff;
-            --danger: #dc2626; --danger-soft: #fef2f2;
-            --success: #16a34a; --success-soft: #f0fdf4; --success-border: #bbf7d0;
-            --amber: #b45309; --amber-soft: #fffbeb; --amber-border: #fef3c7;
-            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
-            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
-            --gray-600: #4b5563; --gray-700: #374151; --gray-900: #111827;
-            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
-            --text: #111827; --text-sec: #374151; --muted: #6b7280; --dim: #9ca3af;
-            --radius: 8px; --radius-lg: 10px;
-            --shadow: 0 1px 2px rgba(0,0,0,0.04);
+            --accent: #7c2d3e; --accent-hover: #651d30; --accent-soft: #fdf2f4; --accent-border: #e8c4cb;
+            --success: #166534; --success-soft: #f0fdf4; --success-border: #bbf7d0;
+            --danger: #991b1b; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --amber: #92400e; --amber-soft: #fffbeb; --amber-border: #fef3c7;
+            --warm-50: #fafaf9; --warm-100: #f5f5f4; --warm-200: #e7e5e4;
+            --warm-300: #d6d3d1; --warm-400: #a8a29e; --warm-500: #78716c;
+            --warm-600: #57534e; --warm-700: #44403c; --warm-900: #1c1917;
+            --bg: #f7f7f5; --card: #ffffff; --border: #e7e5e4;
+            --text: #1c1917; --text-sec: #44403c; --muted: #78716c; --dim: #a8a29e;
+            --radius: 6px; --radius-lg: 8px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06);
+            --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --sans: 'Inter', system-ui, sans-serif;
         }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-        /* ── Nav ── */
-        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; position: sticky; top: 0; z-index: 50; }
-        .brand { font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; margin-right: 20px; }
-        .brand b { color: var(--primary); }
+        /* ── Top stripe + Nav ── */
+        .top-stripe { height: 3px; background: var(--accent); }
+        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 54px; gap: 6px; position: sticky; top: 0; z-index: 50; }
+        .brand { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--accent); text-decoration: none; margin-right: 24px; letter-spacing: -0.3px; }
         .nav-link { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: color .15s, background .15s; }
-        .nav-link:hover { color: var(--text); background: var(--gray-50); }
-        .nav-link.active { color: var(--primary); background: var(--primary-soft); }
-        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-        .nav-user { font-size: 12px; color: var(--muted); }
-        .btn-logout { padding: 4px 10px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
-        .btn-logout:hover { color: var(--text); border-color: var(--gray-300); }
+        .nav-link:hover { color: var(--text); background: var(--warm-100); }
+        .nav-link.active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+        .nav-user { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .btn-logout { padding: 5px 12px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+        .btn-logout:hover { color: var(--text); border-color: var(--warm-300); }
 
         /* ── Layout ── */
-        .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+        .page { max-width: 1120px; margin: 0 auto; padding: 28px 24px 64px; }
 
         .page-header-row {
             display: flex; align-items: flex-end; justify-content: space-between;
             gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
         }
-        .page-header-row h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
-        .page-header-row p { color: var(--muted); font-size: 14px; margin-top: 2px; }
+        .page-header-row h1 { font-family: var(--serif); font-size: 26px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); }
+        .page-header-row p { color: var(--muted); font-size: 14px; margin-top: 3px; }
 
         .btn-export {
             display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 14px; font-size: 13px; font-weight: 600;
-            background: none; color: var(--muted);
-            border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 8px 16px; font-size: 13px; font-weight: 600;
+            background: var(--accent); color: #fff;
+            border: none; border-radius: var(--radius);
             text-decoration: none; white-space: nowrap;
-            transition: color .15s, border-color .15s;
+            transition: background .15s;
         }
-        .btn-export:hover { color: var(--text); border-color: var(--gray-300); }
+        .btn-export:hover { background: var(--accent-hover); }
 
         /* ── Table card ── */
         .table-card {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); overflow: hidden;
+            border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
         }
 
         table { width: 100%; border-collapse: collapse; }
 
-        thead { background: var(--gray-50); }
+        thead { background: var(--warm-50); }
         th {
-            padding: 10px 16px; text-align: left;
+            padding: 10px 14px; text-align: left;
             font-size: 11px; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.04em; color: var(--dim);
+            letter-spacing: 0.04em; color: var(--warm-500);
             border-bottom: 1px solid var(--border);
         }
         td {
-            padding: 10px 16px; font-size: 13px;
-            border-bottom: 1px solid var(--gray-100); color: var(--text);
+            padding: 11px 14px; font-size: 13px;
+            border-bottom: 1px solid var(--warm-200); color: var(--text);
             vertical-align: middle;
         }
         tbody tr:last-child td { border-bottom: none; }
         tbody tr { transition: background .15s; }
-        tbody tr:hover { background: var(--gray-50); }
+        tbody tr:hover { background: var(--warm-50); }
 
         /* ── Badges ── */
-        .score-cell { font-weight: 600; font-size: 13px; color: var(--text); }
+        .score-cell { font-weight: 700; font-size: 13px; color: var(--text); font-family: 'SF Mono', monospace; }
         .id-badge { font-size: 11px; color: var(--dim); font-family: 'SF Mono', monospace; font-weight: 500; }
-        .pct-cell { font-weight: 600; font-size: 12px; }
-        .pct-cell.pass { color: var(--success); }
-        .pct-cell.warn { color: var(--amber); }
-        .pct-cell.fail { color: var(--danger); }
-        .percentile-cell { font-size: 12px; color: var(--muted); font-weight: 500; }
+        .pct-badge {
+            display: inline-block; font-weight: 700; font-size: 11px;
+            padding: 2px 8px; border-radius: 3px; text-align: center; min-width: 44px;
+        }
+        .pct-badge.pass { background: var(--success-soft); color: var(--success); border: 1px solid var(--success-border); }
+        .pct-badge.warn { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber-border); }
+        .pct-badge.fail { background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-border); }
+        .percentile-cell { font-size: 12px; color: var(--muted); font-weight: 600; }
         .meta-cell { font-size: 12px; color: var(--muted); white-space: nowrap; }
         .student-name { font-weight: 600; font-size: 13px; color: var(--text); }
-        .quiz-title { color: var(--gray-600); font-size: 13px; }
+        .quiz-title { color: var(--warm-600); font-size: 13px; }
 
         .btn-pdf {
             padding: 4px 10px; font-size: 11px; font-weight: 600;
-            background: none; color: var(--primary);
-            border: 1px solid var(--border); border-radius: var(--radius);
+            background: none; color: var(--accent);
+            border: 1px solid var(--accent-border); border-radius: var(--radius);
             text-decoration: none; white-space: nowrap;
-            transition: border-color .15s;
+            transition: background .15s, border-color .15s;
         }
-        .btn-pdf:hover { border-color: var(--primary); }
+        .btn-pdf:hover { background: var(--accent-soft); border-color: var(--accent); }
 
         .empty-state {
             padding: 48px 24px; text-align: center; color: var(--dim); font-size: 14px;
         }
 
         .back-link {
-            display: inline-block; margin-top: 24px; font-size: 13px; font-weight: 500;
+            display: inline-block; margin-top: 20px; font-size: 13px; font-weight: 500;
             color: var(--muted); text-decoration: none; transition: color .15s;
         }
-        .back-link:hover { color: var(--primary); }
+        .back-link:hover { color: var(--accent); }
 
         @media (max-width: 900px) {
-            .page { padding: 20px 16px 60px; }
+            .page { padding: 20px 16px 48px; }
             td, th { padding: 8px 10px; }
         }
     </style>
 </head>
 <body>
 
+<div class="top-stripe"></div>
 <nav>
-    <a href="/" class="brand">Test<b>Portal</b></a>
+    <a href="/" class="brand">TestPortal</a>
     <a href="/" class="nav-link">Home</a>
     <a href="/results" class="nav-link active">Results</a>
     <span class="nav-right">
@@ -1398,7 +1445,7 @@ RESULTS_HTML = """
 <div class="page">
     <div class="page-header-row">
         <div>
-            <h1>Results</h1>
+            <h1>Performance Report</h1>
             <p>All student submissions, newest first.</p>
         </div>
         <a href="/export" class="btn-export">Export CSV</a>
@@ -1411,9 +1458,9 @@ RESULTS_HTML = """
                     <tr>
                         <th>#</th>
                         <th>Student</th>
-                        <th>Quiz</th>
+                        <th>Assessment</th>
                         <th>Score</th>
-                        <th>%</th>
+                        <th>Grade</th>
                         <th>Percentile</th>
                         <th>Duration</th>
                         <th>Submitted</th>
@@ -1427,7 +1474,7 @@ RESULTS_HTML = """
                             <td><span class="student-name">{{ row.student }}</span></td>
                             <td><span class="quiz-title">{{ row.title }}</span></td>
                             <td><span class="score-cell">{{ row.score }}/{{ row.total }}</span></td>
-                            <td><span class="pct-cell {% if row.pct >= 70 %}pass{% elif row.pct >= 50 %}warn{% else %}fail{% endif %}">{{ row.pct }}%</span></td>
+                            <td><span class="pct-badge {% if row.pct >= 70 %}pass{% elif row.pct >= 50 %}warn{% else %}fail{% endif %}">{{ row.pct }}%</span></td>
                             <td><span class="percentile-cell">{{ row.percentile }}th</span></td>
                             <td><span class="meta-cell">{{ row.duration }}</span></td>
                             <td><span class="meta-cell">{{ row.submitted_at }}</span></td>
@@ -1438,12 +1485,12 @@ RESULTS_HTML = """
             </table>
         {% else %}
             <div class="empty-state">
-                No results yet. Submissions will appear here.
+                No results yet. Submissions will appear here once students complete assessments.
             </div>
         {% endif %}
     </div>
 
-    <a href="/" class="back-link">Back to home</a>
+    <a href="/" class="back-link">Back to dashboard</a>
 </div>
 
 </body>
