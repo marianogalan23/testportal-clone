@@ -7,6 +7,7 @@ click==8.1.8
 colorama==0.4.6
 Flask==3.1.3
 future @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/future-0.18.2-py3-none-any.whl
+gunicorn==23.0.0
 idna==3.11
 importlib_metadata==8.7.1
 itsdangerous==2.2.0
@@ -15,6 +16,7 @@ lxml==6.0.3
 macholib @ file:///AppleInternal/Library/BuildRoots/39d9dc1a-2111-11f0-be06-226177e5bb69/Library/Caches/com.apple.xbs/Sources/python3/macholib-1.15.2-py2.py3-none-any.whl
 MarkupSafe==3.0.3
 mutagen==1.47.0
+packaging==26.0
 pathvalidate==3.3.1
 pick==1.6.0
 pillow==11.3.0
