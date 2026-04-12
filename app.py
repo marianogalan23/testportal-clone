@@ -247,370 +247,123 @@ HOME_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            /* ── Primary ── */
-            --primary-50: #eef2ff;
-            --primary-100: #e0e7ff;
-            --primary-200: #c7d2fe;
-            --primary-500: #6366f1;
-            --primary-600: #4f46e5;
-            --primary-700: #4338ca;
-            --primary-900: #312e81;
-            /* ── Danger ── */
-            --danger-50: #fef2f2;
-            --danger-100: #fee2e2;
-            --danger-500: #ef4444;
-            --danger-600: #dc2626;
-            --danger-700: #b91c1c;
-            /* ── Success ── */
-            --success-50: #f0fdf4;
-            --success-100: #dcfce7;
-            --success-500: #22c55e;
-            --success-700: #15803d;
-            /* ── Neutral ── */
-            --slate-50: #f8fafc;
-            --slate-100: #f1f5f9;
-            --slate-200: #e2e8f0;
-            --slate-300: #cbd5e1;
-            --slate-400: #94a3b8;
-            --slate-500: #64748b;
-            --slate-600: #475569;
-            --slate-700: #334155;
-            --slate-800: #1e293b;
-            --slate-900: #0f172a;
-            /* ── Semantic aliases ── */
-            --bg: var(--slate-100);
-            --card: #ffffff;
-            --border: var(--slate-200);
-            --text: var(--slate-900);
-            --text-secondary: var(--slate-700);
-            --muted: var(--slate-500);
-            --muted-light: var(--slate-400);
-            /* ── Spacing ── */
-            --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
-            --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
-            /* ── Radii ── */
-            --radius-sm: 6px;
-            --radius: 10px;
-            --radius-lg: 14px;
-            --radius-full: 9999px;
-            /* ── Shadows ── */
-            --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-            --ring-primary: 0 0 0 3px rgba(99,102,241,0.15);
+            --primary: #4f46e5; --primary-hover: #4338ca; --primary-soft: #eef2ff;
+            --danger: #dc2626; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --success: #16a34a; --success-soft: #f0fdf4; --success-border: #bbf7d0;
+            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
+            --gray-600: #4b5563; --gray-700: #374151; --gray-900: #111827;
+            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
+            --text: #111827; --text-sec: #374151; --muted: #6b7280; --dim: #9ca3af;
+            --radius: 8px; --radius-lg: 10px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.04);
+            --ring: 0 0 0 2px rgba(79,70,229,0.15);
         }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+        /* ── Nav ── */
+        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; position: sticky; top: 0; z-index: 50; }
+        .brand { font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; margin-right: 20px; }
+        .brand b { color: var(--primary); }
+        .nav-link { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: color .15s, background .15s; }
+        .nav-link:hover { color: var(--text); background: var(--gray-50); }
+        .nav-link.active { color: var(--primary); background: var(--primary-soft); }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+        .nav-user { font-size: 12px; color: var(--muted); }
+        .btn-logout { padding: 4px 10px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+        .btn-logout:hover { color: var(--text); border-color: var(--gray-300); }
 
-        /* ═══════════ Navbar ═══════════ */
-        nav {
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: saturate(180%) blur(12px);
-            -webkit-backdrop-filter: saturate(180%) blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 0 var(--sp-6);
-            display: flex;
-            align-items: center;
-            height: 56px;
-            gap: var(--sp-1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .brand {
-            font-weight: 800;
-            font-size: 16px;
-            color: var(--primary-600);
-            text-decoration: none;
-            letter-spacing: -0.4px;
-            margin-right: var(--sp-5);
-            display: flex;
-            align-items: center;
-            gap: var(--sp-2);
-        }
-        .brand-mark {
-            width: 26px; height: 26px;
-            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
-            border-radius: 8px;
-            flex-shrink: 0;
-            box-shadow: 0 1px 3px rgba(99,102,241,0.3);
-        }
-        .nav-link {
-            text-decoration: none;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            transition: color 0.15s, background 0.15s;
-        }
-        .nav-link:hover { color: var(--text); background: var(--slate-100); }
-        .nav-link.active { color: var(--primary-600); background: var(--primary-50); font-weight: 600; }
-        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-        .nav-user {
-            font-size: 13px; color: var(--muted); font-weight: 500;
-            background: var(--slate-100); padding: 4px 12px; border-radius: var(--radius-full);
-        }
-        .btn-logout {
-            padding: 5px 12px; font-size: 12px; font-weight: 600;
-            background: transparent; color: var(--muted);
-            border: 1px solid var(--border); border-radius: var(--radius-sm);
-            cursor: pointer; text-decoration: none;
-            transition: background 0.15s, color 0.15s, border-color 0.15s;
-        }
-        .btn-logout:hover { background: var(--slate-50); color: var(--text); border-color: var(--slate-300); }
+        /* ── Layout ── */
+        .page { max-width: 800px; margin: 0 auto; padding: 32px 24px 80px; }
+        .page-header { margin-bottom: 32px; }
+        .page-header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+        .page-header p { color: var(--muted); font-size: 14px; margin-top: 4px; }
 
-        /* ═══════════ Layout ═══════════ */
-        .page { max-width: 860px; margin: 0 auto; padding: var(--sp-8) var(--sp-6) 80px; }
+        /* ── Flash ── */
+        .flash { padding: 10px 14px; border-radius: var(--radius); font-size: 13px; font-weight: 500; margin-bottom: 24px; }
+        .flash.success { background: var(--success-soft); border: 1px solid var(--success-border); color: var(--success); }
+        .flash.error { background: var(--danger-soft); border: 1px solid var(--danger-border); color: var(--danger); }
 
-        .page-header { margin-bottom: var(--sp-8); }
-        .page-header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; }
-        .page-header p { color: var(--muted); font-size: 15px; margin-top: var(--sp-1); }
+        /* ── Section ── */
+        .section { margin-bottom: 32px; }
+        .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); margin-bottom: 10px; }
 
-        /* ═══════════ Flash ═══════════ */
-        .flash {
-            padding: var(--sp-3) var(--sp-4); border-radius: var(--radius);
-            font-size: 14px; font-weight: 500; margin-bottom: var(--sp-6);
-            display: flex; align-items: center; gap: var(--sp-2);
-        }
-        .flash::before { font-size: 16px; flex-shrink: 0; }
-        .flash.success { background: var(--success-50); border: 1px solid var(--success-100); color: var(--success-700); }
-        .flash.success::before { content: "\\2713"; }
-        .flash.error { background: var(--danger-50); border: 1px solid var(--danger-100); color: var(--danger-700); }
-        .flash.error::before { content: "\\2717"; }
+        /* ── Card ── */
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; }
+        .card + .card { margin-top: 10px; }
+        .card-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+        .card-help { margin-top: 10px; font-size: 12px; color: var(--dim); }
+        .card-help code { font-size: 11px; background: var(--gray-100); padding: 1px 5px; border-radius: 3px; font-family: 'SF Mono', monospace; }
 
-        /* ═══════════ Section headers ═══════════ */
-        .section { margin-bottom: var(--sp-8); }
-        .section-head {
-            display: flex; align-items: center; gap: var(--sp-2);
-            margin-bottom: var(--sp-3); padding-left: 2px;
-        }
-        .section-head h2 {
-            font-size: 13px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.05em; color: var(--muted);
-        }
-        .section-head .section-line {
-            flex: 1; height: 1px; background: var(--border); margin-left: var(--sp-2);
-        }
+        /* ── Buttons ── */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 8px 16px; font-size: 13px; font-weight: 600; border: none; border-radius: var(--radius); cursor: pointer; text-decoration: none; font-family: inherit; transition: background .15s, box-shadow .15s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-danger { background: none; color: var(--danger); border: 1px solid var(--danger-border); padding: 5px 10px; font-size: 12px; }
+        .btn-danger:hover { background: var(--danger-soft); }
+        .btn-ghost { background: none; color: var(--muted); padding: 5px 10px; font-size: 12px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; font-family: inherit; transition: color .15s, border-color .15s; }
+        .btn-ghost:hover { color: var(--primary); border-color: var(--primary); }
 
-        /* ═══════════ Cards ═══════════ */
-        .card {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); box-shadow: var(--shadow-xs); padding: var(--sp-5);
-        }
-        .card + .card { margin-top: var(--sp-3); }
-        .card-title {
-            font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: var(--sp-4);
-            display: flex; align-items: center; gap: var(--sp-2);
-        }
-        .card-icon {
-            width: 32px; height: 32px; border-radius: var(--radius);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 15px; flex-shrink: 0;
-        }
-        .card-icon.purple { background: var(--primary-50); color: var(--primary-600); }
-        .card-icon.green  { background: var(--success-50); color: var(--success-700); }
-        .card-help {
-            margin-top: var(--sp-3); font-size: 13px; color: var(--muted-light); line-height: 1.5;
-        }
-        .card-help code {
-            font-size: 12px; background: var(--slate-100); padding: 1px 6px;
-            border-radius: 4px; border: 1px solid var(--border);
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-        }
+        /* ── File input ── */
+        .file-zone { border: 1px dashed var(--gray-300); border-radius: var(--radius); padding: 14px; background: var(--gray-50); text-align: center; }
+        .file-zone input[type="file"] { font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; width: 100%; }
+        .file-zone input[type="file"]::-webkit-file-upload-button { background: var(--card); border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; font-size: 12px; font-weight: 500; color: var(--text-sec); cursor: pointer; margin-right: 8px; font-family: inherit; }
 
-        /* ═══════════ Buttons ═══════════ */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-            padding: 9px 18px; font-size: 13px; font-weight: 600;
-            border: none; border-radius: var(--radius); cursor: pointer;
-            text-decoration: none; white-space: nowrap; font-family: inherit;
-            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
-        }
-        .btn:active { transform: scale(0.96); }
-        .btn-primary {
-            background: var(--primary-600); color: #fff;
-            box-shadow: 0 1px 2px rgba(79,70,229,0.2);
-        }
-        .btn-primary:hover { background: var(--primary-700); box-shadow: 0 2px 8px rgba(79,70,229,0.25); }
-        .btn-secondary {
-            background: var(--card); color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-        .btn-secondary:hover { background: var(--slate-50); border-color: var(--slate-300); }
-        .btn-danger {
-            background: transparent; color: var(--danger-600);
-            border: 1px solid var(--danger-100); padding: 6px 12px; font-size: 12px;
-        }
-        .btn-danger:hover { background: var(--danger-50); border-color: var(--danger-500); }
-        .btn-ghost {
-            background: var(--slate-50); color: var(--primary-600);
-            padding: 6px 12px; font-size: 12px; font-weight: 600;
-            border: 1px solid var(--border); border-radius: var(--radius-sm);
-            cursor: pointer; font-family: inherit;
-            transition: all 0.15s;
-        }
-        .btn-ghost:hover { background: var(--primary-50); border-color: var(--primary-200); }
-
-        /* ═══════════ File input ═══════════ */
-        .file-zone {
-            border: 2px dashed var(--slate-200); border-radius: var(--radius);
-            padding: var(--sp-4); background: var(--slate-50);
-            transition: border-color 0.2s, background 0.2s; cursor: pointer; text-align: center;
-        }
-        .file-zone:hover { border-color: var(--primary-200); background: var(--primary-50); }
-        .file-zone input[type="file"] {
-            font-size: 13px; color: var(--muted); cursor: pointer;
-            background: none; border: none; width: 100%;
-        }
-        .file-zone input[type="file"]::-webkit-file-upload-button {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px;
-            font-weight: 600; color: var(--text-secondary); cursor: pointer;
-            margin-right: 8px; font-family: inherit;
-        }
-
-        /* ═══════════ Quiz list (teacher) ═══════════ */
+        /* ── Quiz list ── */
         .quiz-list { list-style: none; }
-        .quiz-item {
-            border: 1px solid var(--border); border-radius: var(--radius);
-            margin-bottom: var(--sp-2); background: var(--card);
-            overflow: hidden;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .quiz-item:hover { border-color: var(--primary-200); box-shadow: var(--shadow-sm); }
-        .quiz-item-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: var(--sp-3) var(--sp-4); gap: var(--sp-3);
-        }
-        .quiz-item-name { font-weight: 600; font-size: 14px; color: var(--text); }
-        .quiz-item-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+        .quiz-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; background: var(--card); overflow: hidden; transition: border-color .15s; }
+        .quiz-item:hover { border-color: var(--gray-300); }
+        .quiz-item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; gap: 12px; }
+        .quiz-item-name { font-weight: 500; font-size: 14px; color: var(--text); }
+        .quiz-item-actions { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
 
-        /* ═══════════ Toggle panels ═══════════ */
+        /* ── Toggle panels ── */
         .assign-toggle, .class-toggle, .cls-toggle { display: none; }
-        .assign-panel, .class-panel, .cls-panel {
-            display: none; padding: var(--sp-3) var(--sp-4);
-            border-top: 1px solid var(--slate-100); background: var(--slate-50);
-            align-items: center; gap: var(--sp-2); flex-wrap: wrap;
-        }
-        .assign-toggle:checked ~ .assign-panel,
-        .class-toggle:checked ~ .class-panel,
-        .cls-toggle:checked ~ .cls-panel { display: flex; }
-        .assign-panel label, .class-panel label, .cls-panel label {
-            font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap;
-        }
-        .panel-input {
-            padding: 7px 12px; font-size: 13px; border: 1px solid var(--border);
-            border-radius: var(--radius-sm); outline: none; background: var(--card);
-            font-family: inherit; transition: border-color 0.15s, box-shadow 0.15s;
-        }
-        .panel-input:focus { border-color: var(--primary-500); box-shadow: var(--ring-primary); }
+        .assign-panel, .class-panel, .cls-panel { display: none; padding: 10px 16px; border-top: 1px solid var(--gray-100); background: var(--gray-50); align-items: center; gap: 8px; flex-wrap: wrap; }
+        .assign-toggle:checked ~ .assign-panel, .class-toggle:checked ~ .class-panel, .cls-toggle:checked ~ .cls-panel { display: flex; }
+        .assign-panel label, .class-panel label, .cls-panel label { font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+        .panel-input { padding: 7px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; background: var(--card); font-family: inherit; transition: border-color .15s; }
+        .panel-input:focus { border-color: var(--primary); box-shadow: var(--ring); }
         input[type="text"].panel-input { width: 180px; }
         select.panel-input { cursor: pointer; }
-        .btn-panel {
-            padding: 7px 16px; font-size: 12px; font-weight: 600;
-            background: var(--primary-600); color: #fff; border: none;
-            border-radius: var(--radius-sm); cursor: pointer; font-family: inherit;
-            transition: background 0.15s;
-        }
-        .btn-panel:hover { background: var(--primary-700); }
+        .btn-panel { padding: 7px 14px; font-size: 12px; font-weight: 600; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; font-family: inherit; transition: background .15s; }
+        .btn-panel:hover { background: var(--primary-hover); }
 
-        /* ═══════════ Class list ═══════════ */
+        /* ── Class list ── */
         .class-list { list-style: none; }
-        .class-item {
-            border: 1px solid var(--border); border-radius: var(--radius);
-            margin-bottom: var(--sp-2); background: var(--card); overflow: hidden;
-        }
-        .class-item-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: var(--sp-3) var(--sp-4);
-        }
-        .class-item-name { font-weight: 600; font-size: 14px; color: var(--text); display: flex; align-items: center; gap: var(--sp-2); }
-        .member-badge {
-            font-size: 11px; color: var(--muted); background: var(--slate-100);
-            border: 1px solid var(--border); border-radius: var(--radius-full);
-            padding: 2px 10px; font-weight: 600;
-        }
-        .create-class-row {
-            display: flex; gap: var(--sp-2); align-items: center;
-            margin-bottom: var(--sp-4); flex-wrap: wrap;
-        }
-        .create-class-row input[type="text"] {
-            flex: 1; min-width: 160px; padding: 9px 14px; font-size: 14px;
-            border: 1px solid var(--border); border-radius: var(--radius-sm);
-            outline: none; background: var(--card); font-family: inherit;
-            transition: border-color 0.15s, box-shadow 0.15s;
-        }
-        .create-class-row input[type="text"]:focus { border-color: var(--primary-500); box-shadow: var(--ring-primary); }
+        .class-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 6px; background: var(--card); overflow: hidden; }
+        .class-item-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; }
+        .class-item-name { font-weight: 500; font-size: 14px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+        .member-badge { font-size: 11px; color: var(--dim); background: var(--gray-100); border-radius: 99px; padding: 1px 8px; font-weight: 500; }
+        .create-class-row { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+        .create-class-row input[type="text"] { flex: 1; min-width: 160px; padding: 8px 12px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; background: var(--card); font-family: inherit; transition: border-color .15s; }
+        .create-class-row input[type="text"]:focus { border-color: var(--primary); box-shadow: var(--ring); }
 
-        .empty-state {
-            text-align: center; color: var(--muted-light); font-size: 14px;
-            padding: var(--sp-8) 0;
-        }
-        .empty-state span { display: block; font-size: 28px; margin-bottom: var(--sp-2); opacity: 0.5; }
+        .empty { text-align: center; color: var(--dim); font-size: 13px; padding: 24px 0; }
 
-        /* ═══════════ Import grid ═══════════ */
-        .import-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+        .import-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (max-width: 640px) { .import-grid { grid-template-columns: 1fr; } }
 
-        /* ═══════════ Student quiz cards ═══════════ */
-        .student-quiz-grid { display: flex; flex-direction: column; gap: 10px; }
-        .student-quiz-card {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: var(--sp-5) var(--sp-5);
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); text-decoration: none;
-            box-shadow: var(--shadow-xs);
-            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
-        }
-        .student-quiz-card:hover {
-            border-color: var(--primary-200);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-        .sq-left { display: flex; align-items: center; gap: var(--sp-4); }
-        .sq-icon {
-            width: 40px; height: 40px; border-radius: var(--radius);
-            background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; flex-shrink: 0; color: var(--primary-600);
-        }
-        .sq-name { font-weight: 600; font-size: 15px; color: var(--text); }
-        .sq-arrow {
-            width: 32px; height: 32px; border-radius: var(--radius-full);
-            background: var(--slate-100); display: flex; align-items: center;
-            justify-content: center; color: var(--muted-light); font-size: 16px;
-            transition: all 0.2s; flex-shrink: 0;
-        }
-        .student-quiz-card:hover .sq-arrow {
-            background: var(--primary-600); color: #fff;
-            box-shadow: 0 2px 8px rgba(99,102,241,0.3);
-        }
+        /* ── Student quiz cards ── */
+        .student-quiz-grid { display: flex; flex-direction: column; gap: 6px; }
+        .student-quiz-card { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); text-decoration: none; transition: border-color .15s, box-shadow .15s; }
+        .student-quiz-card:hover { border-color: var(--gray-300); box-shadow: var(--shadow); }
+        .sq-name { font-weight: 500; font-size: 14px; color: var(--text); }
+        .sq-arrow { color: var(--dim); font-size: 18px; transition: color .15s; }
+        .student-quiz-card:hover .sq-arrow { color: var(--primary); }
 
-        @media (max-width: 600px) {
-            nav { padding: 0 var(--sp-4); }
-            .page { padding: var(--sp-5) var(--sp-4) 60px; }
-        }
+        @media (max-width: 600px) { nav { padding: 0 16px; } .page { padding: 24px 16px 60px; } }
     </style>
 </head>
 <body>
 
 <nav>
-    <a href="/" class="brand"><span class="brand-mark"></span>TestPortal</a>
+    <a href="/" class="brand">Test<b>Portal</b></a>
     <a href="/" class="nav-link active">Home</a>
     {% if is_teacher %}<a href="/results" class="nav-link">Results</a>{% endif %}
     <span class="nav-right">
@@ -630,86 +383,64 @@ HOME_HTML = """
     {% endif %}
 
     {% if not is_teacher %}
-        {# ── Student view ── #}
         <div class="page-header">
             <h1>Your Quizzes</h1>
-            <p>Select a quiz below to begin.</p>
+            <p>Select a quiz to begin.</p>
         </div>
 
         {% if quizzes %}
             <div class="student-quiz-grid">
                 {% for quiz in quizzes %}
                     <a href="/quiz/{{ quiz[0] }}" class="student-quiz-card">
-                        <span class="sq-left">
-                            <span class="sq-icon">Q</span>
-                            <span class="sq-name">{{ quiz[1] }}</span>
-                        </span>
+                        <span class="sq-name">{{ quiz[1] }}</span>
                         <span class="sq-arrow">&#8250;</span>
                     </a>
                 {% endfor %}
             </div>
         {% else %}
             <div class="card">
-                <div class="empty-state">
-                    <span>&#128203;</span>
-                    No quizzes have been assigned to you yet.
-                </div>
+                <p class="empty">No quizzes assigned to you yet.</p>
             </div>
         {% endif %}
 
     {% else %}
-        {# ── Teacher view ── #}
 
         <div class="page-header">
             <h1>Dashboard</h1>
-            <p>Manage quizzes, students, and class assignments.</p>
+            <p>Manage quizzes, students, and classes.</p>
         </div>
 
-        <!-- ── Import section ── -->
         <div class="section">
-            <div class="section-head">
-                <h2>Import</h2>
-                <div class="section-line"></div>
-            </div>
+            <div class="section-label">Import</div>
             <div class="import-grid">
                 <div class="card">
-                    <div class="card-title">
-                        <span class="card-icon purple">Q</span>
-                        Import Quiz
-                    </div>
+                    <div class="card-title">Quiz (.docx)</div>
                     <form method="POST" enctype="multipart/form-data" action="/import">
                         <div class="file-zone">
                             <input type="file" name="quiz_file" accept=".docx" required>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="margin-top:var(--sp-3);width:100%;">Upload &amp; Import</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top:12px;width:100%;">Upload &amp; Import</button>
                     </form>
                 </div>
                 <div class="card">
-                    <div class="card-title">
-                        <span class="card-icon green">U</span>
-                        Import Students
-                    </div>
+                    <div class="card-title">Students (.csv)</div>
                     <form method="POST" enctype="multipart/form-data" action="/import-students">
                         <div class="file-zone">
                             <input type="file" name="students_csv" accept=".csv,.txt" required>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="margin-top:var(--sp-3);width:100%;">Upload &amp; Import</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top:12px;width:100%;">Upload &amp; Import</button>
                     </form>
-                    <p class="card-help">CSV format: <code>username,password</code> per line.</p>
+                    <p class="card-help">Format: <code>username,password</code> per line.</p>
                 </div>
             </div>
         </div>
 
-        <!-- ── Classes section ── -->
         <div class="section">
-            <div class="section-head">
-                <h2>Classes</h2>
-                <div class="section-line"></div>
-            </div>
+            <div class="section-label">Classes</div>
             <div class="card">
                 <form method="POST" action="/class/create" class="create-class-row">
-                    <input type="text" name="name" placeholder="New class name..." required>
-                    <button type="submit" class="btn btn-primary">Create Class</button>
+                    <input type="text" name="name" placeholder="New class name" required>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </form>
                 {% if classes %}
                     <ul class="class-list">
@@ -719,13 +450,12 @@ HOME_HTML = """
                                 <div class="class-item-row">
                                     <span class="class-item-name">
                                         {{ cls[1] }}
-                                        <span class="member-badge">{{ cls[2] }} member{{ 's' if cls[2] != 1 else '' }}</span>
+                                        <span class="member-badge">{{ cls[2] }}</span>
                                     </span>
-                                    <label for="cls-{{ cls[0] }}" class="btn-ghost">+ Add Member</label>
+                                    <label for="cls-{{ cls[0] }}" class="btn-ghost">+ Add member</label>
                                 </div>
                                 <div class="cls-panel">
-                                    <form method="POST" action="/class/{{ cls[0] }}/add-member"
-                                          style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                    <form method="POST" action="/class/{{ cls[0] }}/add-member" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                                         <label>Username:</label>
                                         <input type="text" name="username" class="panel-input" placeholder="e.g. alice" required>
                                         <button type="submit" class="btn-panel">Add</button>
@@ -735,21 +465,14 @@ HOME_HTML = """
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <div class="empty-state">
-                        <span>&#128101;</span>
-                        No classes yet. Create one above.
-                    </div>
+                    <p class="empty">No classes yet.</p>
                 {% endif %}
             </div>
         </div>
 
-        <!-- ── Quizzes section ── -->
         <div class="section">
-            <div class="section-head">
-                <h2>Quizzes</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="card" style="padding:var(--sp-3);">
+            <div class="section-label">Quizzes</div>
+            <div class="card" style="padding:10px;">
                 {% if quizzes %}
                     <ul class="quiz-list">
                         {% for quiz in quizzes %}
@@ -759,19 +482,17 @@ HOME_HTML = """
                                 <div class="quiz-item-row">
                                     <span class="quiz-item-name">{{ quiz[1] }}</span>
                                     <div class="quiz-item-actions">
-                                        <label for="assign-{{ quiz[0] }}" class="btn-ghost">Assign User</label>
+                                        <label for="assign-{{ quiz[0] }}" class="btn-ghost">Assign user</label>
                                         {% if classes %}
-                                            <label for="class-assign-{{ quiz[0] }}" class="btn-ghost">Assign Class</label>
+                                            <label for="class-assign-{{ quiz[0] }}" class="btn-ghost">Assign class</label>
                                         {% endif %}
-                                        <form method="POST" action="/quiz/{{ quiz[0] }}/delete"
-                                              onsubmit="return confirm('Delete &quot;{{ quiz[1] }}&quot; and all its data? This cannot be undone.');">
+                                        <form method="POST" action="/quiz/{{ quiz[0] }}/delete" onsubmit="return confirm('Delete &quot;{{ quiz[1] }}&quot; and all its data?');">
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     </div>
                                 </div>
                                 <div class="assign-panel">
-                                    <form method="POST" action="/quiz/{{ quiz[0] }}/assign"
-                                          style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                    <form method="POST" action="/quiz/{{ quiz[0] }}/assign" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                                         <label>Assign to:</label>
                                         <input type="text" name="username" class="panel-input" placeholder="username" required>
                                         <button type="submit" class="btn-panel">Assign</button>
@@ -779,9 +500,8 @@ HOME_HTML = """
                                 </div>
                                 {% if classes %}
                                     <div class="class-panel">
-                                        <form method="POST" action="/quiz/{{ quiz[0] }}/assign-class"
-                                              style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                                            <label>Assign to class:</label>
+                                        <form method="POST" action="/quiz/{{ quiz[0] }}/assign-class" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                            <label>Class:</label>
                                             <select name="class_id" class="panel-input" required>
                                                 {% for cls in classes %}
                                                     <option value="{{ cls[0] }}">{{ cls[1] }}</option>
@@ -795,17 +515,12 @@ HOME_HTML = """
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <div class="empty-state">
-                        <span>&#128218;</span>
-                        No quizzes imported yet.
-                    </div>
+                    <p class="empty">No quizzes imported yet.</p>
                 {% endif %}
             </div>
         </div>
     {% endif %}
-
 </div>
-
 </body>
 </html>
 """
@@ -819,186 +534,119 @@ QUIZ_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ quiz_title }} — TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --primary-50: #eef2ff; --primary-100: #e0e7ff; --primary-200: #c7d2fe;
-            --primary-500: #6366f1; --primary-600: #4f46e5; --primary-700: #4338ca;
-            --success-50: #f0fdf4; --success-100: #dcfce7; --success-500: #22c55e; --success-700: #15803d;
-            --danger-50: #fef2f2; --danger-100: #fee2e2; --danger-500: #ef4444; --danger-700: #b91c1c;
-            --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
-            --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
-            --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a;
-            --bg: var(--slate-100); --card: #ffffff; --border: var(--slate-200);
-            --text: var(--slate-900); --muted: var(--slate-500); --muted-light: var(--slate-400);
-            --radius-sm: 6px; --radius: 10px; --radius-lg: 14px; --radius-full: 9999px;
-            --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
-            --ring-primary: 0 0 0 3px rgba(99,102,241,0.15);
+            --primary: #4f46e5; --primary-hover: #4338ca; --primary-soft: #eef2ff;
+            --danger: #dc2626; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --success: #16a34a; --success-soft: #f0fdf4; --success-border: #bbf7d0;
+            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
+            --gray-600: #4b5563; --gray-700: #374151; --gray-900: #111827;
+            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
+            --text: #111827; --text-sec: #374151; --muted: #6b7280; --dim: #9ca3af;
+            --radius: 8px; --radius-lg: 10px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.04);
+            --ring: 0 0 0 2px rgba(79,70,229,0.15);
         }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-            background: var(--bg); color: var(--text); line-height: 1.6;
-            min-height: 100vh; -webkit-font-smoothing: antialiased;
-        }
-
-        /* ── Navbar ── */
-        nav {
-            background: rgba(255,255,255,0.85); backdrop-filter: saturate(180%) blur(12px);
-            -webkit-backdrop-filter: saturate(180%) blur(12px);
-            border-bottom: 1px solid var(--border); padding: 0 24px;
-            display: flex; align-items: center; height: 56px; gap: 4px;
-            position: sticky; top: 0; z-index: 100;
-        }
-        .brand {
-            font-weight: 800; font-size: 16px; color: var(--primary-600);
-            text-decoration: none; letter-spacing: -0.4px; margin-right: 20px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .brand-mark {
-            width: 26px; height: 26px;
-            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
-            border-radius: 8px; flex-shrink: 0; box-shadow: 0 1px 3px rgba(99,102,241,0.3);
-        }
-        .nav-link {
-            text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500;
-            padding: 6px 12px; border-radius: var(--radius-sm);
-            transition: color 0.15s, background 0.15s;
-        }
-        .nav-link:hover { color: var(--text); background: var(--slate-100); }
-        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-        .nav-user { font-size: 13px; color: var(--muted); font-weight: 500; background: var(--slate-100); padding: 4px 12px; border-radius: var(--radius-full); }
-        .btn-logout {
-            padding: 5px 12px; font-size: 12px; font-weight: 600;
-            background: transparent; color: var(--muted); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); cursor: pointer; text-decoration: none;
-            transition: background 0.15s, color 0.15s;
-        }
-        .btn-logout:hover { background: var(--slate-50); color: var(--text); }
+        /* ── Nav ── */
+        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; position: sticky; top: 0; z-index: 50; }
+        .brand { font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; margin-right: 20px; }
+        .brand b { color: var(--primary); }
+        .nav-link { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: color .15s, background .15s; }
+        .nav-link:hover { color: var(--text); background: var(--gray-50); }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+        .nav-user { font-size: 12px; color: var(--muted); }
+        .btn-logout { padding: 4px 10px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+        .btn-logout:hover { color: var(--text); border-color: var(--gray-300); }
 
         /* ── Layout ── */
         .page { max-width: 700px; margin: 0 auto; padding: 32px 24px 80px; }
-
         .page-header { margin-bottom: 28px; }
-        .page-header h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.4px; }
+        .page-header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
         .taking-as {
-            display: inline-flex; align-items: center; gap: 6px;
-            margin-top: 10px; font-size: 12px; color: var(--muted);
-            background: var(--slate-50); border: 1px solid var(--border);
-            border-radius: var(--radius-full); padding: 4px 14px; font-weight: 500;
-        }
-
-        /* ── Progress ── */
-        .quiz-progress {
-            height: 4px; background: var(--slate-200); border-radius: 2px;
-            margin-bottom: 28px; overflow: hidden;
-        }
-        .quiz-progress-fill {
-            height: 100%; background: linear-gradient(90deg, var(--primary-500), var(--primary-600));
-            border-radius: 2px; transition: width 0.3s;
+            display: inline-block; margin-top: 8px; font-size: 12px; color: var(--muted); font-weight: 500;
         }
 
         /* ── Question cards ── */
         .question-card {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); box-shadow: var(--shadow-xs);
-            padding: 24px; margin-bottom: 16px;
+            border-radius: var(--radius-lg); padding: 20px 22px; margin-bottom: 12px;
         }
         .question-num {
-            font-size: 11px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.06em; color: var(--muted-light); margin-bottom: 8px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.04em; color: var(--dim); margin-bottom: 6px;
         }
         .question-text {
-            font-size: 16px; font-weight: 600; line-height: 1.55;
-            margin-bottom: 20px; color: var(--text);
+            font-size: 15px; font-weight: 600; line-height: 1.5;
+            margin-bottom: 16px; color: var(--text);
         }
 
         /* ── Options ── */
         .option-label {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 16px; border: 2px solid var(--slate-200);
-            border-radius: var(--radius); margin-bottom: 8px;
-            cursor: pointer; font-size: 14px; font-weight: 500;
-            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; border: 1px solid var(--border);
+            border-radius: var(--radius); margin-bottom: 6px;
+            cursor: pointer; font-size: 14px; font-weight: 500; color: var(--text-sec);
+            transition: border-color .15s, background .15s;
         }
-        .option-label:hover {
-            border-color: var(--primary-200); background: var(--primary-50);
-            transform: translateX(2px);
-        }
+        .option-label:hover { border-color: var(--gray-300); background: var(--gray-50); }
         .option-label input[type="radio"] {
-            accent-color: var(--primary-600); width: 18px; height: 18px; flex-shrink: 0;
+            accent-color: var(--primary); width: 16px; height: 16px; flex-shrink: 0;
         }
 
         /* States */
         .option-label.option-correct {
-            background: var(--success-50); border-color: var(--success-500);
-            color: var(--success-700); font-weight: 600; cursor: default;
+            background: var(--success-soft); border-color: var(--success-border);
+            color: var(--success); font-weight: 600; cursor: default;
         }
-        .option-label.option-correct:hover { transform: none; }
-        .option-label.option-correct input[type="radio"] { accent-color: var(--success-500); }
+        .option-label.option-correct:hover { background: var(--success-soft); border-color: var(--success-border); }
         .option-label.option-incorrect {
-            background: var(--danger-50); border-color: var(--danger-500);
-            color: var(--danger-700); font-weight: 600; cursor: default;
+            background: var(--danger-soft); border-color: var(--danger-border);
+            color: var(--danger); font-weight: 600; cursor: default;
         }
-        .option-label.option-incorrect:hover { transform: none; }
-        .option-label.option-incorrect input[type="radio"] { accent-color: var(--danger-500); }
+        .option-label.option-incorrect:hover { background: var(--danger-soft); border-color: var(--danger-border); }
         .option-label.option-disabled {
-            cursor: default; color: var(--muted); border-color: var(--slate-200); opacity: 0.7;
+            cursor: default; color: var(--dim); opacity: 0.65;
         }
-        .option-label.option-disabled:hover { border-color: var(--slate-200); background: transparent; transform: none; }
+        .option-label.option-disabled:hover { border-color: var(--border); background: transparent; }
 
         .option-badge {
-            margin-left: auto; font-size: 11px; font-weight: 700;
-            padding: 3px 10px; border-radius: var(--radius-full); white-space: nowrap;
+            margin-left: auto; font-size: 11px; font-weight: 600;
+            padding: 2px 8px; border-radius: 4px; white-space: nowrap;
         }
-        .badge-correct { background: var(--success-100); color: var(--success-700); }
-        .badge-incorrect { background: var(--danger-100); color: var(--danger-700); }
-        .badge-answer { background: var(--success-100); color: var(--success-700); }
+        .badge-correct { background: var(--success-soft); color: var(--success); }
+        .badge-incorrect { background: var(--danger-soft); color: var(--danger); }
+        .badge-answer { background: var(--success-soft); color: var(--success); }
 
         /* ── Score banner ── */
         .score-banner {
-            background: linear-gradient(135deg, var(--primary-600) 0%, #7c3aed 50%, #a855f7 100%);
-            color: #fff; border-radius: var(--radius-lg);
-            padding: 28px 32px; margin-bottom: 28px;
-            display: flex; align-items: center; gap: 20px;
-            box-shadow: 0 8px 32px rgba(99,102,241,0.3);
-            position: relative; overflow: hidden;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 24px;
+            margin-bottom: 24px; display: flex; align-items: center; gap: 16px;
         }
-        .score-banner::before {
-            content: ""; position: absolute; top: -50%; right: -20%;
-            width: 300px; height: 300px; border-radius: 50%;
-            background: rgba(255,255,255,0.08);
-        }
-        .score-value { font-size: 36px; font-weight: 900; letter-spacing: -1px; position: relative; }
-        .score-label { font-size: 14px; opacity: 0.75; font-weight: 500; position: relative; }
+        .score-value { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: var(--primary); }
+        .score-label { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
 
         /* ── Submit ── */
-        .submit-row { margin-top: 28px; }
+        .submit-row { margin-top: 24px; }
         .btn-submit {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 14px 32px; font-size: 15px; font-weight: 700;
-            background: var(--primary-600); color: #fff; border: none;
+            padding: 10px 24px; font-size: 14px; font-weight: 600;
+            background: var(--primary); color: #fff; border: none;
             border-radius: var(--radius); cursor: pointer; font-family: inherit;
-            box-shadow: 0 2px 8px rgba(79,70,229,0.25);
-            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+            transition: background .15s;
         }
-        .btn-submit:hover {
-            background: var(--primary-700);
-            box-shadow: 0 4px 16px rgba(79,70,229,0.35);
-            transform: translateY(-1px);
-        }
-        .btn-submit:active { transform: translateY(0) scale(0.98); }
+        .btn-submit:hover { background: var(--primary-hover); }
+        .btn-submit:active { transform: scale(0.98); }
 
         .back-link {
-            display: inline-flex; align-items: center; gap: 6px;
-            margin-top: 28px; font-size: 13px; font-weight: 500;
-            color: var(--muted); text-decoration: none;
-            transition: color 0.15s;
+            display: inline-block; margin-top: 24px; font-size: 13px; font-weight: 500;
+            color: var(--muted); text-decoration: none; transition: color .15s;
         }
-        .back-link:hover { color: var(--primary-600); }
+        .back-link:hover { color: var(--primary); }
 
         @media (max-width: 600px) { .page { padding: 24px 16px 60px; } }
     </style>
@@ -1006,7 +654,7 @@ QUIZ_HTML = """
 <body>
 
 <nav>
-    <a href="/" class="brand"><span class="brand-mark"></span>TestPortal</a>
+    <a href="/" class="brand">Test<b>Portal</b></a>
     <a href="/" class="nav-link">Home</a>
     {% if is_teacher %}<a href="/results" class="nav-link">Results</a>{% endif %}
     <span class="nav-right">
@@ -1079,12 +727,12 @@ QUIZ_HTML = """
 
         {% if not submitted %}
             <div class="submit-row">
-                <button type="submit" class="btn-submit">Submit Quiz &#8594;</button>
+                <button type="submit" class="btn-submit">Submit Quiz</button>
             </div>
         {% endif %}
     </form>
 
-    <a href="/" class="back-link">&#8592; Back to home</a>
+    <a href="/" class="back-link">Back to home</a>
 </div>
 
 </body>
@@ -1100,88 +748,73 @@ LOGIN_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --primary-500: #6366f1; --primary-600: #4f46e5; --primary-700: #4338ca;
-            --danger-50: #fef2f2; --danger-100: #fee2e2; --danger-700: #b91c1c;
-            --slate-100: #f1f5f9; --slate-200: #e2e8f0; --slate-400: #94a3b8;
-            --slate-500: #64748b; --slate-900: #0f172a;
-            --card: #ffffff; --radius: 14px;
-            --ring-primary: 0 0 0 3px rgba(99,102,241,0.15);
+            --primary: #4f46e5; --primary-hover: #4338ca;
+            --danger: #dc2626; --danger-soft: #fef2f2; --danger-border: #fecaca;
+            --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db;
+            --gray-400: #9ca3af; --gray-500: #6b7280; --gray-900: #111827;
+            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
+            --text: #111827; --muted: #6b7280;
+            --radius: 8px;
+            --ring: 0 0 0 2px rgba(79,70,229,0.15);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-            background: var(--slate-100);
-            color: var(--slate-900);
-            min-height: 100vh;
-            display: flex; align-items: center; justify-content: center;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg); color: var(--text);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
             -webkit-font-smoothing: antialiased;
-            /* subtle pattern */
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(99,102,241,0.06) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(168,85,247,0.05) 0%, transparent 50%);
         }
 
-        .login-wrapper { width: 100%; max-width: 400px; padding: 0 24px; }
+        .login-wrapper { width: 100%; max-width: 380px; padding: 0 24px; }
 
-        .login-brand { text-align: center; margin-bottom: 32px; }
-        .login-logo {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
-            border-radius: 14px; margin: 0 auto 16px;
-            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
-        }
+        .login-brand { text-align: center; margin-bottom: 28px; }
         .login-brand-name {
-            font-size: 24px; font-weight: 800; color: var(--slate-900); letter-spacing: -0.6px;
+            font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.3px;
         }
+        .login-brand-name b { color: var(--primary); }
         .login-brand-sub {
-            font-size: 15px; color: var(--slate-500); margin-top: 4px;
+            font-size: 14px; color: var(--muted); margin-top: 4px;
         }
 
         .login-card {
-            background: var(--card); border: 1px solid var(--slate-200);
+            background: var(--card); border: 1px solid var(--border);
             border-radius: var(--radius);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.06);
-            padding: 32px 28px 28px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            padding: 28px 24px 24px;
         }
 
-        .field { margin-bottom: 20px; }
+        .field { margin-bottom: 18px; }
         .field label {
             display: block; font-size: 13px; font-weight: 600;
-            color: var(--slate-900); margin-bottom: 6px;
+            color: var(--text); margin-bottom: 5px;
         }
         .field input {
-            width: 100%; padding: 11px 14px; font-size: 15px;
-            border: 2px solid var(--slate-200); border-radius: 10px;
+            width: 100%; padding: 9px 12px; font-size: 14px;
+            border: 1px solid var(--border); border-radius: var(--radius);
             outline: none; background: var(--card); font-family: inherit;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color .15s, box-shadow .15s;
         }
-        .field input:focus { border-color: var(--primary-500); box-shadow: var(--ring-primary); }
-        .field input::placeholder { color: var(--slate-400); }
+        .field input:focus { border-color: var(--primary); box-shadow: var(--ring); }
+        .field input::placeholder { color: var(--gray-400); }
 
         .btn-login {
-            width: 100%; padding: 12px; margin-top: 8px;
-            font-size: 15px; font-weight: 700;
-            background: var(--primary-600); color: #fff;
-            border: none; border-radius: 10px; cursor: pointer; font-family: inherit;
-            box-shadow: 0 2px 8px rgba(79,70,229,0.25);
-            transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+            width: 100%; padding: 10px; margin-top: 4px;
+            font-size: 14px; font-weight: 600;
+            background: var(--primary); color: #fff;
+            border: none; border-radius: var(--radius); cursor: pointer; font-family: inherit;
+            transition: background .15s;
         }
-        .btn-login:hover {
-            background: var(--primary-700);
-            box-shadow: 0 4px 16px rgba(79,70,229,0.35);
-            transform: translateY(-1px);
-        }
-        .btn-login:active { transform: translateY(0) scale(0.98); }
+        .btn-login:hover { background: var(--primary-hover); }
+        .btn-login:active { transform: scale(0.98); }
 
         .error {
-            background: var(--danger-50); border: 1px solid var(--danger-100);
-            color: var(--danger-700); font-size: 14px; font-weight: 500;
-            padding: 12px 14px; border-radius: 10px; margin-bottom: 20px;
+            background: var(--danger-soft); border: 1px solid var(--danger-border);
+            color: var(--danger); font-size: 13px; font-weight: 500;
+            padding: 10px 12px; border-radius: var(--radius); margin-bottom: 18px;
         }
     </style>
 </head>
@@ -1189,8 +822,7 @@ LOGIN_HTML = """
 
 <div class="login-wrapper">
     <div class="login-brand">
-        <div class="login-logo"></div>
-        <div class="login-brand-name">TestPortal</div>
+        <div class="login-brand-name">Test<b>Portal</b></div>
         <div class="login-brand-sub">Sign in to your account</div>
     </div>
 
@@ -1640,179 +1272,121 @@ RESULTS_HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results — TestPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --primary-50: #eef2ff; --primary-100: #e0e7ff; --primary-200: #c7d2fe;
-            --primary-500: #6366f1; --primary-600: #4f46e5; --primary-700: #4338ca;
-            --success-50: #f0fdf4; --success-100: #dcfce7; --success-500: #22c55e; --success-700: #15803d;
-            --danger-50: #fef2f2; --danger-100: #fee2e2; --danger-700: #b91c1c;
-            --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-700: #b45309;
-            --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
-            --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
-            --slate-600: #475569; --slate-700: #334155; --slate-900: #0f172a;
-            --bg: var(--slate-100); --card: #ffffff; --border: var(--slate-200);
-            --text: var(--slate-900); --muted: var(--slate-500); --muted-light: var(--slate-400);
-            --radius-sm: 6px; --radius: 10px; --radius-lg: 14px; --radius-full: 9999px;
-            --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.05);
-            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+            --primary: #4f46e5; --primary-hover: #4338ca; --primary-soft: #eef2ff;
+            --danger: #dc2626; --danger-soft: #fef2f2;
+            --success: #16a34a; --success-soft: #f0fdf4; --success-border: #bbf7d0;
+            --amber: #b45309; --amber-soft: #fffbeb; --amber-border: #fef3c7;
+            --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+            --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
+            --gray-600: #4b5563; --gray-700: #374151; --gray-900: #111827;
+            --bg: #f9fafb; --card: #fff; --border: #e5e7eb;
+            --text: #111827; --text-sec: #374151; --muted: #6b7280; --dim: #9ca3af;
+            --radius: 8px; --radius-lg: 10px;
+            --shadow: 0 1px 2px rgba(0,0,0,0.04);
         }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-            background: var(--bg); color: var(--text); line-height: 1.6;
-            min-height: 100vh; -webkit-font-smoothing: antialiased;
-        }
-
-        /* ── Navbar ── */
-        nav {
-            background: rgba(255,255,255,0.85); backdrop-filter: saturate(180%) blur(12px);
-            -webkit-backdrop-filter: saturate(180%) blur(12px);
-            border-bottom: 1px solid var(--border); padding: 0 24px;
-            display: flex; align-items: center; height: 56px; gap: 4px;
-            position: sticky; top: 0; z-index: 100;
-        }
-        .brand {
-            font-weight: 800; font-size: 16px; color: var(--primary-600);
-            text-decoration: none; letter-spacing: -0.4px; margin-right: 20px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .brand-mark {
-            width: 26px; height: 26px;
-            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
-            border-radius: 8px; flex-shrink: 0; box-shadow: 0 1px 3px rgba(99,102,241,0.3);
-        }
-        .nav-link {
-            text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500;
-            padding: 6px 12px; border-radius: var(--radius-sm);
-            transition: color 0.15s, background 0.15s;
-        }
-        .nav-link:hover { color: var(--text); background: var(--slate-100); }
-        .nav-link.active { color: var(--primary-600); background: var(--primary-50); font-weight: 600; }
-        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-        .nav-user { font-size: 13px; color: var(--muted); font-weight: 500; background: var(--slate-100); padding: 4px 12px; border-radius: var(--radius-full); }
-        .btn-logout {
-            padding: 5px 12px; font-size: 12px; font-weight: 600;
-            background: transparent; color: var(--muted); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); cursor: pointer; text-decoration: none;
-            transition: background 0.15s, color 0.15s;
-        }
-        .btn-logout:hover { background: var(--slate-50); color: var(--text); }
+        /* ── Nav ── */
+        nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 4px; position: sticky; top: 0; z-index: 50; }
+        .brand { font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; margin-right: 20px; }
+        .brand b { color: var(--primary); }
+        .nav-link { text-decoration: none; color: var(--muted); font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: color .15s, background .15s; }
+        .nav-link:hover { color: var(--text); background: var(--gray-50); }
+        .nav-link.active { color: var(--primary); background: var(--primary-soft); }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+        .nav-user { font-size: 12px; color: var(--muted); }
+        .btn-logout { padding: 4px 10px; font-size: 12px; font-weight: 500; background: none; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; text-decoration: none; transition: color .15s, border-color .15s; }
+        .btn-logout:hover { color: var(--text); border-color: var(--gray-300); }
 
         /* ── Layout ── */
-        .page { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; }
+        .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
 
         .page-header-row {
             display: flex; align-items: flex-end; justify-content: space-between;
-            gap: 16px; flex-wrap: wrap; margin-bottom: 24px;
+            gap: 16px; flex-wrap: wrap; margin-bottom: 20px;
         }
-        .page-header-row h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-        .page-header-row p  { color: var(--muted); font-size: 15px; margin-top: 2px; }
+        .page-header-row h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+        .page-header-row p { color: var(--muted); font-size: 14px; margin-top: 2px; }
 
         .btn-export {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 9px 18px; font-size: 13px; font-weight: 600;
-            background: var(--success-50); color: var(--success-700);
-            border: 1px solid var(--success-100); border-radius: var(--radius);
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 14px; font-size: 13px; font-weight: 600;
+            background: none; color: var(--muted);
+            border: 1px solid var(--border); border-radius: var(--radius);
             text-decoration: none; white-space: nowrap;
-            box-shadow: var(--shadow-xs);
-            transition: all 0.2s;
+            transition: color .15s, border-color .15s;
         }
-        .btn-export:hover {
-            background: var(--success-100); border-color: var(--success-500);
-            box-shadow: var(--shadow-sm); transform: translateY(-1px);
-        }
-        .btn-export:active { transform: translateY(0); }
+        .btn-export:hover { color: var(--text); border-color: var(--gray-300); }
 
         /* ── Table card ── */
         .table-card {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: var(--radius-lg); box-shadow: var(--shadow-xs); overflow: hidden;
+            border-radius: var(--radius-lg); overflow: hidden;
         }
 
         table { width: 100%; border-collapse: collapse; }
 
-        thead { background: var(--slate-50); }
+        thead { background: var(--gray-50); }
         th {
-            padding: 12px 16px; text-align: left;
-            font-size: 11px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.06em; color: var(--muted);
-            border-bottom: 2px solid var(--border);
+            padding: 10px 16px; text-align: left;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.04em; color: var(--dim);
+            border-bottom: 1px solid var(--border);
         }
         td {
-            padding: 12px 16px; font-size: 13px;
-            border-bottom: 1px solid var(--slate-100); color: var(--text);
+            padding: 10px 16px; font-size: 13px;
+            border-bottom: 1px solid var(--gray-100); color: var(--text);
             vertical-align: middle;
         }
         tbody tr:last-child td { border-bottom: none; }
-        tbody tr { transition: background 0.15s; }
-        tbody tr:hover { background: var(--slate-50); }
+        tbody tr { transition: background .15s; }
+        tbody tr:hover { background: var(--gray-50); }
 
-        /* ── Badges & pills ── */
-        .score-pill {
-            display: inline-flex; align-items: center;
-            background: var(--primary-50); color: var(--primary-600);
-            font-weight: 700; font-size: 12px; padding: 3px 10px;
-            border-radius: var(--radius-full); border: 1px solid var(--primary-100);
-        }
-        .id-badge {
-            font-size: 11px; color: var(--muted-light);
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-weight: 600;
-        }
-        .pct-pill {
-            display: inline-flex; align-items: center;
-            font-weight: 700; font-size: 12px; padding: 3px 10px;
-            border-radius: var(--radius-full);
-        }
-        .pct-pill.pass { background: var(--success-50); color: var(--success-700); border: 1px solid var(--success-100); }
-        .pct-pill.warn { background: var(--amber-50); color: var(--amber-700); border: 1px solid var(--amber-100); }
-        .pct-pill.fail { background: var(--danger-50); color: var(--danger-700); border: 1px solid var(--danger-100); }
-        .percentile-pill {
-            display: inline-flex; align-items: center;
-            font-size: 12px; color: var(--slate-600); font-weight: 600;
-            background: var(--slate-100); padding: 3px 10px;
-            border-radius: var(--radius-full); border: 1px solid var(--border);
-        }
+        /* ── Badges ── */
+        .score-cell { font-weight: 600; font-size: 13px; color: var(--text); }
+        .id-badge { font-size: 11px; color: var(--dim); font-family: 'SF Mono', monospace; font-weight: 500; }
+        .pct-cell { font-weight: 600; font-size: 12px; }
+        .pct-cell.pass { color: var(--success); }
+        .pct-cell.warn { color: var(--amber); }
+        .pct-cell.fail { color: var(--danger); }
+        .percentile-cell { font-size: 12px; color: var(--muted); font-weight: 500; }
         .meta-cell { font-size: 12px; color: var(--muted); white-space: nowrap; }
         .student-name { font-weight: 600; font-size: 13px; color: var(--text); }
-        .quiz-title { color: var(--slate-700); font-size: 13px; }
+        .quiz-title { color: var(--gray-600); font-size: 13px; }
 
         .btn-pdf {
-            display: inline-flex; align-items: center; gap: 4px;
-            padding: 5px 12px; font-size: 11px; font-weight: 600;
-            background: var(--card); color: var(--primary-600);
-            border: 1px solid var(--primary-200); border-radius: var(--radius-sm);
+            padding: 4px 10px; font-size: 11px; font-weight: 600;
+            background: none; color: var(--primary);
+            border: 1px solid var(--border); border-radius: var(--radius);
             text-decoration: none; white-space: nowrap;
-            transition: all 0.15s;
+            transition: border-color .15s;
         }
-        .btn-pdf:hover {
-            background: var(--primary-50); border-color: var(--primary-500);
-        }
+        .btn-pdf:hover { border-color: var(--primary); }
 
         .empty-state {
-            padding: 56px 24px; text-align: center; color: var(--muted-light); font-size: 15px;
+            padding: 48px 24px; text-align: center; color: var(--dim); font-size: 14px;
         }
-        .empty-state span { display: block; font-size: 32px; margin-bottom: 8px; opacity: 0.4; }
 
         .back-link {
-            display: inline-flex; align-items: center; gap: 6px;
-            margin-top: 28px; font-size: 13px; font-weight: 500;
-            color: var(--muted); text-decoration: none; transition: color 0.15s;
+            display: inline-block; margin-top: 24px; font-size: 13px; font-weight: 500;
+            color: var(--muted); text-decoration: none; transition: color .15s;
         }
-        .back-link:hover { color: var(--primary-600); }
+        .back-link:hover { color: var(--primary); }
 
         @media (max-width: 900px) {
             .page { padding: 20px 16px 60px; }
-            td, th { padding: 10px 12px; }
+            td, th { padding: 8px 10px; }
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <a href="/" class="brand"><span class="brand-mark"></span>TestPortal</a>
+    <a href="/" class="brand">Test<b>Portal</b></a>
     <a href="/" class="nav-link">Home</a>
     <a href="/results" class="nav-link active">Results</a>
     <span class="nav-right">
@@ -1827,7 +1401,7 @@ RESULTS_HTML = """
             <h1>Results</h1>
             <p>All student submissions, newest first.</p>
         </div>
-        <a href="/export" class="btn-export">&#8595; Export CSV</a>
+        <a href="/export" class="btn-export">Export CSV</a>
     </div>
 
     <div class="table-card">
@@ -1852,9 +1426,9 @@ RESULTS_HTML = """
                             <td><span class="id-badge">#{{ row.id }}</span></td>
                             <td><span class="student-name">{{ row.student }}</span></td>
                             <td><span class="quiz-title">{{ row.title }}</span></td>
-                            <td><span class="score-pill">{{ row.score }}/{{ row.total }}</span></td>
-                            <td><span class="pct-pill {% if row.pct >= 70 %}pass{% elif row.pct >= 50 %}warn{% else %}fail{% endif %}">{{ row.pct }}%</span></td>
-                            <td><span class="percentile-pill">{{ row.percentile }}th</span></td>
+                            <td><span class="score-cell">{{ row.score }}/{{ row.total }}</span></td>
+                            <td><span class="pct-cell {% if row.pct >= 70 %}pass{% elif row.pct >= 50 %}warn{% else %}fail{% endif %}">{{ row.pct }}%</span></td>
+                            <td><span class="percentile-cell">{{ row.percentile }}th</span></td>
                             <td><span class="meta-cell">{{ row.duration }}</span></td>
                             <td><span class="meta-cell">{{ row.submitted_at }}</span></td>
                             <td><a href="/result/{{ row.id }}/pdf" class="btn-pdf">PDF</a></td>
@@ -1864,13 +1438,12 @@ RESULTS_HTML = """
             </table>
         {% else %}
             <div class="empty-state">
-                <span>&#128202;</span>
                 No results yet. Submissions will appear here.
             </div>
         {% endif %}
     </div>
 
-    <a href="/" class="back-link">&#8592; Back to home</a>
+    <a href="/" class="back-link">Back to home</a>
 </div>
 
 </body>
