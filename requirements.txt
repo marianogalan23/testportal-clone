@@ -2,3 +2,4 @@ Flask
 gunicorn
 python-docx
 reportlab
+psycopg2-binary
