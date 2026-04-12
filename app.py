@@ -178,36 +178,68 @@ def compute_percentile(score, total, quiz_id, conn):
 
 
 def parse_quiz_from_docx(file_path):
+    import re
     doc = docx.Document(file_path)
     quiz = []
     current_question = None
 
+    # Patterns for numbered format: "1. Question text" or "1) Question text"
+    numbered_q_pattern = re.compile(r'^(\d+)\s*[.)]\s+(.+)')
+    # Patterns for lettered options: "a) option" or "a. option" or "A) option"
+    lettered_opt_pattern = re.compile(r'^([a-dA-D])\s*[.)]\s+(.+)')
+
     for para in doc.paragraphs:
         text = para.text.strip()
+        if not text:
+            continue
 
-        if text:
-            if text.startswith("Q:"):
-                if current_question:
-                    quiz.append(current_question)
+        # --- Format 1: Q:/A: prefix format (original) ---
+        if text.startswith("Q:"):
+            if current_question:
+                quiz.append(current_question)
+            current_question = {
+                "question": text[2:].strip(),
+                "options": [],
+                "answer": None
+            }
+            continue
 
-                current_question = {
-                    "question": text[2:].strip(),
-                    "options": [],
-                    "answer": None
-                }
+        if text.startswith("A:") and current_question is not None:
+            option_text = clean_option_text(text[2:].strip())
+            is_correct = any(run.bold for run in para.runs if run.text.strip())
+            current_question["options"].append(option_text)
+            if is_correct:
+                current_question["answer"] = option_text
+            continue
 
-            elif text.startswith("A:"):
-                if current_question is not None:
-                    option_text = clean_option_text(text[2:].strip())
-                    is_correct = any(run.bold for run in para.runs)
+        # --- Format 2: Numbered questions / lettered options ---
+        num_match = numbered_q_pattern.match(text)
+        letter_match = lettered_opt_pattern.match(text)
 
-                    current_question["options"].append(option_text)
+        # If it looks like a lettered option AND we have a current question, treat as option
+        if letter_match and current_question is not None:
+            option_text = clean_option_text(letter_match.group(2).strip())
+            # Check if any non-whitespace run is bold (correct answer marker)
+            is_correct = any(run.bold for run in para.runs if run.text.strip())
+            current_question["options"].append(option_text)
+            if is_correct:
+                current_question["answer"] = option_text
 
-                    if is_correct:
-                        current_question["answer"] = option_text
+        # If it looks like a numbered question, start a new question
+        elif num_match:
+            if current_question:
+                quiz.append(current_question)
+            current_question = {
+                "question": num_match.group(2).strip(),
+                "options": [],
+                "answer": None
+            }
 
     if current_question:
         quiz.append(current_question)
+
+    # Filter out questions that have no options (e.g. title lines misdetected)
+    quiz = [q for q in quiz if q["options"]]
 
     return quiz
 
@@ -1035,10 +1067,14 @@ def import_quiz():
     file.save(file_path)
 
     quiz_data = parse_quiz_from_docx(file_path)
+
+    if not quiz_data:
+        return redirect(url_for("home", flash="Import failed: no questions found. Check that your Word document uses numbered questions (1. 2. 3.) with lettered options (a, b, c, d) and bold for correct answers.", flash_type="error"))
+
     title = os.path.splitext(file.filename)[0]
     save_quiz_to_db(title, file.filename, quiz_data)
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home", flash=f"Successfully imported \"{title}\" with {len(quiz_data)} questions.", flash_type="success"))
 
 
 @app.route("/import-students", methods=["POST"])
