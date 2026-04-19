@@ -133,6 +133,7 @@ def init_db():
     cur.execute("ALTER TABLE results ADD COLUMN IF NOT EXISTS submitted_at TIMESTAMP DEFAULT NOW()")
     cur.execute("ALTER TABLE results ADD COLUMN IF NOT EXISTS duration_seconds INTEGER")
     cur.execute("ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'student'")
+    cur.execute("ALTER TABLE questions ALTER COLUMN correct_answer DROP NOT NULL")
 
     conn.commit()
     conn.close()
@@ -262,9 +263,10 @@ def save_quiz_to_db(title, filename, quiz_data):
     quiz_id = cur.fetchone()[0]
 
     for q in quiz_data:
+        # answer may be None if no bold text was detected in the source document
         cur.execute(
             "INSERT INTO questions (quiz_id, question_text, correct_answer) VALUES (%s, %s, %s) RETURNING id",
-            (quiz_id, q["question"], q["answer"])
+            (quiz_id, q["question"], q.get("answer"))
         )
         question_id = cur.fetchone()[0]
 
