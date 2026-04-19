@@ -5,6 +5,7 @@ import psycopg2
 import psycopg2.extras
 import docx
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 from flask import Flask, render_template_string, request, redirect, url_for, session, Response
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
@@ -141,11 +142,17 @@ def clean_option_text(text):
     return text.replace("✓", "").strip()
 
 
+DISPLAY_TZ = ZoneInfo("Europe/Prague")
+
 def fmt_dt(val):
-    """Format a datetime value (or string) for display. Returns '—' for None."""
+    """Format a datetime value (or string) for display in Europe/Prague timezone. Returns '—' for None."""
     if val is None:
         return "—"
     if hasattr(val, "strftime"):
+        # If naive (no tzinfo), assume UTC
+        if val.tzinfo is None:
+            val = val.replace(tzinfo=timezone.utc)
+        val = val.astimezone(DISPLAY_TZ)
         return val.strftime("%Y-%m-%d %H:%M:%S")
     return str(val)
 
@@ -998,6 +1005,20 @@ def logout():
 
 def is_teacher():
     return session.get("role") == "teacher"
+
+
+@app.route("/setup-teacher")
+def setup_teacher():
+    """One-time route to create a default teacher account."""
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO users (username, password, role) VALUES (%s, %s, 'teacher') ON CONFLICT (username) DO UPDATE SET role = 'teacher', password = %s",
+        ("teacher", "teacher123", "teacher123")
+    )
+    conn.commit()
+    conn.close()
+    return "Teacher account created. Username: <b>teacher</b> / Password: <b>teacher123</b>. <a href='/login'>Go to login</a>."
 
 
 @app.route("/")
