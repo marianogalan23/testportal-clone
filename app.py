@@ -1083,19 +1083,25 @@ def import_quiz():
     if not file or file.filename == "":
         return "No file selected."
 
-    os.makedirs("uploads", exist_ok=True)
-    file_path = os.path.join("uploads", file.filename)
-    file.save(file_path)
+    try:
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".docx", delete=False) as tmp:
+            file.save(tmp.name)
+            file_path = tmp.name
 
-    quiz_data = parse_quiz_from_docx(file_path)
+        quiz_data = parse_quiz_from_docx(file_path)
 
-    if not quiz_data:
-        return redirect(url_for("home", flash="Import failed: no questions found. Check that your Word document uses numbered questions (1. 2. 3.) with lettered options (a, b, c, d) and bold for correct answers.", flash_type="error"))
+        if not quiz_data:
+            return redirect(url_for("home", flash="Import failed: no questions found. Check that your Word document uses numbered questions (1. 2. 3.) with lettered options (a, b, c, d) and bold for correct answers.", flash_type="error"))
 
-    title = os.path.splitext(file.filename)[0]
-    save_quiz_to_db(title, file.filename, quiz_data)
+        title = os.path.splitext(file.filename)[0]
+        save_quiz_to_db(title, file.filename, quiz_data)
 
-    return redirect(url_for("home", flash=f"Successfully imported \"{title}\" with {len(quiz_data)} questions.", flash_type="success"))
+        return redirect(url_for("home", flash=f"Successfully imported \"{title}\" with {len(quiz_data)} questions.", flash_type="success"))
+
+    except Exception as e:
+        import traceback
+        return f"<pre>Import error:\n{traceback.format_exc()}</pre>", 500
 
 
 @app.route("/import-students", methods=["POST"])
