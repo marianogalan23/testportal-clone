@@ -185,6 +185,23 @@ def compute_percentile(score, total, quiz_id, conn):
     return round(at_or_below / len(all_scores) * 100)
 
 
+def is_answer_marked(para):
+    """Return True if paragraph is marked as the correct answer.
+    Detects: bold text OR yellow/any highlight colour on any run."""
+    for run in para.runs:
+        if not run.text.strip():
+            continue
+        if run.bold:
+            return True
+        # python-docx exposes highlight via run.font.highlight_color
+        try:
+            if run.font.highlight_color is not None:
+                return True
+        except Exception:
+            pass
+    return False
+
+
 def parse_quiz_from_docx(file_path):
     import re
     doc = docx.Document(file_path)
@@ -214,9 +231,8 @@ def parse_quiz_from_docx(file_path):
 
         if text.startswith("A:") and current_question is not None:
             option_text = clean_option_text(text[2:].strip())
-            is_correct = any(run.bold for run in para.runs if run.text.strip())
             current_question["options"].append(option_text)
-            if is_correct:
+            if is_answer_marked(para):
                 current_question["answer"] = option_text
             continue
 
@@ -227,10 +243,8 @@ def parse_quiz_from_docx(file_path):
         # If it looks like a lettered option AND we have a current question, treat as option
         if letter_match and current_question is not None:
             option_text = clean_option_text(letter_match.group(2).strip())
-            # Check if any non-whitespace run is bold (correct answer marker)
-            is_correct = any(run.bold for run in para.runs if run.text.strip())
             current_question["options"].append(option_text)
-            if is_correct:
+            if is_answer_marked(para):
                 current_question["answer"] = option_text
 
         # If it looks like a numbered question, start a new question
